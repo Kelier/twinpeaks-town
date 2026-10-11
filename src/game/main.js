@@ -5,11 +5,15 @@ import { createRenderer, createComposer, TEX } from './gfx.js';
 import { Sound } from './audio.js';
 import { Player } from './player.js';
 import { World } from './world.js';
+import { dressStage } from './immersion.js';
 import { LEVELS } from './levels.js';
 import { ORDER, NEXT, CROSSROADS, CLUES, ENDINGS, EPISODES, newStory, endingFor, insight } from './story.js';
 import { t, tx, T, LANGS, getLang, setLang, onLang } from './i18n.js';
-import { ost, openOst } from './ost.js';
+import { mountTitleRoom } from './title-room.js';
+import { musicControl, paintMusic, toggleMusic } from './bgm.js';
 import './game.css';
+import './theme.css';
+import { mountTouch } from './touch-controls.js';
 
 const app = document.querySelector('#app');
 app.innerHTML = `
@@ -24,34 +28,42 @@ app.innerHTML = `
   </div>
   <section id="dialog" hidden><b class="who"></b><p class="line"></p><ol class="choices"></ol><span class="more">▼</span></section>
   <section id="title">
+    <div class="title-art"><img src="/themes/red-room-miniature.webp" alt="" fetchpriority="high" /></div>
+    <header class="title-top"><span class="wordmark">双峰 · 梦境剧场</span><button data-act="library" class="quiet-button">${T('档案与设置','Archive & settings')}</button></header>
     <div class="title-inner">
-      <p class="eyebrow" data-t="eyebrow"></p>
-      <h1>双峰<span>TWIN PEAKS · LITTLE NIGHTMARE</span></h1>
+      <h1>双峰<span>TWIN PEAKS</span></h1>
+      <p class="title-copy">${T('有些梦，从未醒来。','Some dreams never end.')}</p>
       <p class="loading" data-t="loading"></p>
       <div class="menu" hidden>
         <button data-act="new" data-t="start"></button>
-        <button data-act="continue" hidden><b data-t="continue"></b> · <em></em></button>
+        <button data-act="continue" hidden><b data-t="continue"></b><em></em></button>
       </div>
-      <div class="extras">
-        <button data-act="guide-lynch" data-t="guideLynch"></button>
-        <button data-act="guide-fwwm" data-t="guideFwwm"></button>
-        <button data-act="ost" data-t="ost"></button>
-        <span class="langs" role="group"></span>
-      </div>
-      <p class="keys" data-t="keys"></p>
-      <p class="credit" data-t="credit"></p>
+<div class="title-music">${musicControl()}<p>Julee Cruise — Falling</p></div>
     </div>
+    <footer class="title-footer"><span>${T('献给大卫·林奇','For David Lynch')}<small>1946 — 2025</small></span><button data-act="help" class="quiet-button">${T('如何游玩','How to play')}</button><span class="footer-note">${T('非官方互动致敬','An unofficial interactive tribute')}</span></footer>
   </section>
+  <section id="library" hidden aria-label="${T('档案与设置','Archive and settings')}">
+    <button class="panel-close quiet-button" data-act="close-library">${T('返回','Back')} <span aria-hidden="true">×</span></button>
+    <h2>${T('梦境档案','The dream archive')}</h2>
+    <p>${T('在故事之外，再多停留片刻。','Stay a little longer, beyond the story.')}</p>
+    <div class="extras">
+      <button data-act="guide-lynch" data-t="guideLynch"></button>
+      <button data-act="guide-fwwm" data-t="guideFwwm"></button>
+      <span class="langs" role="group"></span>
+    </div>
+    <details id="help"><summary>${T('操作说明','Controls')}</summary><p class="keys" data-t="keys"></p><p>${T('手机：左侧方向键移动，右侧跳跃与互动。按住「互动 / 抓取」拖动道具，同时按方向键。','On touch screens, move with the left controls. Jump and interact on the right. Hold Use and a direction to drag objects.')}</p></details>
+  </section>
+  <button id="pause-toggle" data-act="pause" aria-label="${T('暂停游戏','Pause game')}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg></button>
   <section id="pause" hidden>
     <h2 data-t="intermission"></h2>
     <div class="program"></div>
+    <div class="pause-music">${musicControl()}</div>
     <div class="pause-buttons">
       <button data-act="resume" data-t="resume"></button>
       <button data-act="restart" data-t="restart"></button>
       <button data-act="mute"></button>
       <button data-act="guide-lynch" data-t="guideLynch"></button>
       <button data-act="guide-fwwm" data-t="guideFwwm"></button>
-      <button data-act="ost" data-t="ost"></button>
       <span class="langs" role="group"></span>
       <button data-act="quit" data-t="quit"></button>
     </div>
@@ -63,9 +75,14 @@ const $ = (s) => app.querySelector(s);
 function paintUI() {
   app.querySelectorAll('[data-t]').forEach((n) => { n.textContent = t(n.dataset.t); });
   app.querySelectorAll('.langs').forEach((g) => { g.innerHTML = Object.entries(LANGS).map(([k, v]) => `<button data-lang="${k}" class="${k === getLang() ? 'on' : ''}" aria-pressed="${k === getLang()}">${v}</button>`).join(''); });
-  $('[data-act=mute]').textContent = t(sound.muted ? 'soundOff' : 'soundOn');
+  $('[data-act=mute]').textContent = (sound.muted ? T('环境音效 · 关闭','Effects · off') : T('环境音效 · 开启','Effects · on'));
   const cont = $('[data-act=continue] em'); if (cont && LEVELS[saved.id]) cont.textContent = tx(LEVELS[saved.id].name);
   if (G.state === 'paused') $('#pause .program').innerHTML = program();
+  paintMusic();
+  $('.title-copy').textContent=T('有些梦，从未醒来。','Some dreams never end.');
+  $('[data-act=library]').textContent=T('档案与设置','Archive & settings');
+  $('[data-act=help]').textContent=T('如何游玩','How to play');
+
   document.title = getLang() === 'zh' ? '双峰 · 小小梦魇' : 'Twin Peaks · Little Nightmare';
 }
 onLang(paintUI);
@@ -74,23 +91,26 @@ let overlay = null;
 function openOverlay(kind) {
   if (overlay) return;
   const done = () => { overlay = null; };
-  if (kind === 'ost') { const close = openOst({ onChange: () => syncMusic(true) }); overlay = { close }; const el = document.querySelector('#ost'); new MutationObserver((m, o) => { if (!el.isConnected) { o.disconnect(); done(); } }).observe(document.body, { childList: true }); return; }
   overlay = { close: () => { } };
   import('./guide.js').then((m) => { overlay.close = m.openGuide(kind, { onClose: done }); }).catch((e) => { console.error(e); done(); });
 }
+try { localStorage.removeItem('tp-visual-theme'); } catch {}
 const renderer = createRenderer($('#stage'));
+renderer.domElement.id = 'velvet-stage';
 const camera = new THREE.PerspectiveCamera(32, innerWidth / innerHeight, .1, 220);
 const { composer, finish } = createComposer(renderer, new THREE.Scene(), camera);
 const sound = new Sound();
+let titleRoom;
 const SAVE = 'tp-little-nightmare-v3';
 let saved = (() => { try { return JSON.parse(localStorage.getItem(SAVE)) || {}; } catch { return {}; } })();
 
 // ---------------- input ----------------
 const keys = new Set(); const pressed = new Set();
-addEventListener('keydown', (e) => { if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) e.preventDefault(); if (!keys.has(e.code)) pressed.add(e.code); keys.add(e.code); onKey(e); });
+addEventListener('keydown', (e) => { if(e.code === 'Space' && e.target.closest?.('button')) return; if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) e.preventDefault(); if (!keys.has(e.code)) pressed.add(e.code); keys.add(e.code); onKey(e); });
 addEventListener('keyup', (e) => { keys.delete(e.code); if (e.code === 'KeyE') interactHeldBlock = false; });
 addEventListener('blur', () => keys.clear());
 let interactHeldBlock = false;
+mountTouch(app, { press(code) { if(overlay)return; if(!keys.has(code))pressed.add(code); keys.add(code);onKey({code}); }, release(code) {keys.delete(code);if(code==='KeyE')interactHeldBlock=false;} });
 const input = () => ({
   x: (keys.has('KeyD') || keys.has('ArrowRight') ? 1 : 0) - (keys.has('KeyA') || keys.has('ArrowLeft') ? 1 : 0),
   z: (keys.has('KeyS') || keys.has('ArrowDown') ? 1 : 0) - (keys.has('KeyW') || keys.has('ArrowUp') ? 1 : 0),
@@ -165,7 +185,7 @@ const load = (path) => { if (!cache.has(path)) cache.set(path, loader.loadAsync(
 async function loadCast(id) {
   if (G.models.cast[id]) return G.models.cast[id];
   const g = await load(`./game/cast/${id}.glb`).catch(() => load(`./game/${id}.glb`)).catch(() => null);
-  if (g) G.models.cast[id] = g; return g;
+  if (g) { G.models.cast[id] = g; } return g;
 }
 async function ensureAssets(L) {
   const ids = ['cooper', ...(L.cast || [])];
@@ -200,24 +220,26 @@ function proscenium() {
 }
 const arch = proscenium(); camera.add(arch);
 function fitArch() {
+  arch.visible = innerWidth >= innerHeight;
   const h = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 2, w = h * camera.aspect;
   arch.children[0].position.y = h - .05; arch.children[0].scale.x = w;                 // valance
   arch.children[1].position.x = -w + .06; arch.children[2].position.x = w - .06;       // legs
   arch.children[3].position.y = -h + .02; arch.children[3].scale.x = w;
 }
 
-// ---------------- music: the player's own soundtrack file for this cue if they have one, else the original synth score ----------------
-async function syncMusic(force = false) {
+// Ambient room tone remains separate from the explicitly enabled Falling track.
+async function syncMusic() {
   const cue = G.cue; if (!cue) return;
   const kind = cue === 'title' ? 'title' : LEVELS[cue]?.ambience;
-  const has = await ost.has(cue);
-  if (force && ost.current === cue && has) return;
-  sound.ambience(kind, { noMusic: has });
-  if (has) { if (sound.ctx || cue !== 'title') ost.play(cue); } else ost.stop();
+  sound.ambience(kind, { noMusic: true });
 }
 
 // ---------------- chapters ----------------
-function disposeScene(s) { s?.traverse((o) => { o.geometry?.dispose?.(); }); }
+function disposeScene(s) {
+  const materials=new Set();
+  s?.traverse(o=>{o.geometry?.dispose?.();if(o.material)(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>materials.add(m));o.shadow?.dispose?.();});
+  materials.forEach(m=>m.dispose());
+}
 
 async function buildLevel(id, { title = false, restore = null } = {}) {
   const L = LEVELS[id]; await ensureAssets(L);
@@ -233,8 +255,10 @@ async function buildLevel(id, { title = false, restore = null } = {}) {
   G.flags = restore?.flags ? { ...restore.flags } : {};
   Object.assign(ctx, { scene, world, player: G.player, intro: null, onRespawn: null, onRestore: null, restoring: !!restore });
   world.onFall = () => caught('fall');
+  scene.userData.chapter = id;
   L.build(ctx);
-  renderer.toneMappingExposure = L.exposure || 1.1;
+  dressStage(ctx, renderer);
+  renderer.toneMappingExposure = (L.exposure || 1.1) * (id === 'redroom' ? .85 : 1);
   composer.passes[0].scene = scene;
   G.checkpoint = 0; G.focus = null; G.dim = 0; G.dread = 0;
   if (restore) {
@@ -255,7 +279,9 @@ async function buildLevel(id, { title = false, restore = null } = {}) {
 }
 
 async function startGame(resume) {
-  sound.start(); $('#title').classList.add('gone'); G.state = 'card';
+  if(G.state !== 'title')return;
+  titleRoom?.dispose(); sound.start(); $('#title').classList.add('gone'); G.state = 'card';
+  hud.card.hidden=false; hud.card.classList.add('on');hud.card.querySelector('small').textContent='';hud.card.querySelector('h2').textContent=t('loading');
   if (resume) { G.story = saved.story || newStory(); await buildLevel(saved.id, { restore: saved }); }
   else { G.story = newStory(); await buildLevel(ORDER[0]); }
   await chapterCard(G.level);
@@ -304,10 +330,10 @@ async function caught(why) {
 }
 
 async function ending(kind = 'annie') {
-  const E = ENDINGS[kind]; G.state = 'ending'; sound.stopAmbience(1.5); ost.stop(1500); G.fadeTarget = 0; G.fadeSpeed = .05;
+  const E = ENDINGS[kind]; G.state = 'ending'; sound.stopAmbience(1.5); G.fadeTarget = 0; G.fadeSpeed = .05;
   const el = $('#ending'); el.hidden = false; el.innerHTML = '';
   const show = async (html, ms, cls = '') => { const p = document.createElement('p'); p.className = cls; p.innerHTML = html; el.append(p); await wait(30); p.classList.add('on'); await wait(ms); };
-  await wait(1200); sound.sting(); ost.play('ending', { loop: false });
+  await wait(1200); sound.sting();
   const lines = E.lines();
   for (const [i, l] of lines.entries()) await show(l, 3000, i === lines.length - 1 ? 'big' : '');
   if (kind === 'annie') { sound.scream(); await wait(600); }
@@ -332,7 +358,8 @@ function program() {
 
 // ---------------- keys & menus ----------------
 function onKey(e) {
-  if (overlay) return;
+  if (overlay || !$('#library').hidden) return;
+  if (e.target?.closest('button, summary, input') && ['Enter','Space'].includes(e.code)) return;
   sound.ctx && sound.ctx.state === 'suspended' && sound.ctx.resume();
   if (G.state === 'title' && (e.code === 'Enter' || e.code === 'Space')) { startGame(hasSave()); return; }
   if (G.state === 'ended') { location.reload(); return; }
@@ -347,37 +374,42 @@ function onKey(e) {
   if (e.code === 'Escape' && (G.state === 'play' || G.state === 'paused')) togglePause();
   if (G.state !== 'play') return;
   if (e.code === 'KeyF' && G.player.mode === 'normal') G.player.setTorch(!G.player.torchOn);
-  if (e.code === 'KeyM') { sound.setMuted(!sound.muted); ost.setMuted(sound.muted); }
+  if (e.code === 'KeyM') { sound.setMuted(!sound.muted); }
   if (e.code === 'KeyE' && G.player.mode === 'normal') { const it = G.world.nearestInteractable(G.player.pos); if (it) { interactHeldBlock = true; it.use(it); } }
 }
 app.addEventListener('click', (e) => {
   const c = e.target.closest('[data-choice]'); if (c && dlg.resolve) { const r = dlg.resolve; dlg.resolve = null; dlg.opts = null; r(+c.dataset.choice); return; }
   if (G.state === 'dialog' && e.target.closest('#dialog') && dlg.resolve && !dlg.opts) { if (dlg.resolve()) dlg.resolve = null; return; }
   const b = e.target.closest('button'); if (!b) return; const a = b.dataset.act;
+  if (b.dataset.act === 'bgm') { toggleMusic(); return; }
+  if (a === 'library' || a === 'help') {$('#library').hidden=false;$('#help').open=a==='help';$('#library button').focus();return;}
+  if(a === 'close-library') {$('#library').hidden=true;$('[data-act=library]').focus();return;}
+  if(a === 'pause') {if(G.state==='play'||G.state==='paused')togglePause();return;}
   if (b.dataset.lang) { setLang(b.dataset.lang); return; }
   if (a === 'guide-lynch' || a === 'guide-fwwm') { openOverlay(a === 'guide-lynch' ? 'lynch' : 'fwwm'); return; }
-  if (a === 'ost') { openOverlay('ost'); return; }
+  
   if (a === 'new') startGame(false);
   if (a === 'continue') startGame(true);
   if (a === 'resume') togglePause();
   if (a === 'restart') { togglePause(); G.state = 'card'; buildLevel(G.id).then(() => chapterCard(G.level)).then(() => { G.state = 'play'; readyResolve(); }); }
-  if (a === 'mute') { sound.setMuted(!sound.muted); ost.setMuted(sound.muted); b.textContent = t(sound.muted ? 'soundOff' : 'soundOn'); }
+  if (a === 'mute') { sound.setMuted(!sound.muted); b.textContent = (sound.muted ? T('环境音效 · 关闭','Effects · off') : T('环境音效 · 开启','Effects · on')); }
   if (a === 'quit') { persist(); location.reload(); }
 });
 function togglePause() {
   const p = $('#pause');
-  if (G.state === 'play') { G.state = 'paused'; p.querySelector('.program').innerHTML = program(); p.hidden = false; sound.ctx?.suspend(); ost.pause(); }
-  else { G.state = 'play'; p.hidden = true; sound.ctx?.resume(); ost.resume(); }
+  if (G.state === 'play') { G.state = 'paused'; p.querySelector('.program').innerHTML = program(); p.hidden = false; sound.ctx?.suspend(); }
+  else { G.state = 'play'; p.hidden = true; sound.ctx?.resume(); }
 }
 
 // ---------------- boot ----------------
 (async () => {
   try {
     paintUI();
-    await buildLevel(hasSave() && LEVELS[saved.id] ? saved.id : ORDER[0], { title: true });
+    // The title has its own artwork; load scene assets only when the player enters.
     $('.loading').hidden = true; $('.menu').hidden = false;
-    if (hasSave()) { const b = $('[data-act=continue]'); b.hidden = false; b.querySelector('em').textContent = tx(LEVELS[saved.id].name); $('.menu').prepend(b); b.focus(); }
+    if (hasSave()) { const b = $('[data-act=continue]'); b.hidden = false; b.querySelector('em').textContent = tx(LEVELS[saved.id].name); $('.menu').prepend(b); }
     G.state = 'title';
+    titleRoom = mountTitleRoom($('.title-art'));
   } catch (e) { $('.loading').textContent = t('loadFail'); console.error(e); }
 })();
 
@@ -404,11 +436,12 @@ function frame() {
   finish.uniforms.red.value += ((G.red || 0) * .8 + G.dread * .25 - finish.uniforms.red.value) * Math.min(1, dt * 4);
   finish.uniforms.bars.value += ((G.focus ? .1 : .055) - finish.uniforms.bars.value) * Math.min(1, dt * 3);
   hud.dread.style.opacity = G.dread;
-  composer.render();
+  document.documentElement.dataset.gameState = G.state;
+  if (G.state !== 'title' && G.state !== 'loading') composer.render();
 }
 function updateCamera(dt) {
   const p = G.player.pos, L = G.level;
-  let tx = p.x + G.player.face * 1.0, ty = p.y * .75 + 2.05, tz = 10.5, lx = tx, ly = p.y * .75 + 1.25;
+  let tx = p.x + G.player.face * 1.0, ty = p.y * .75 + 3.0, tz = innerWidth < innerHeight ? 17 : 11.2, lx = tx, ly = p.y * .75 + 1.25;
   if (!L.loop) { const hw = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * tz * camera.aspect * .82; tx = Math.max(L.bounds[0] + hw, Math.min(L.bounds[1] - hw, tx)); lx = tx; }
   if (G.focus) { const f = G.focus.v; tx = f.x; lx = f.x; ty = f.y + 1.4; ly = f.y; tz = 12.5 / G.focus.zoom; }
   const k = Math.min(1, dt * 2.2);
@@ -432,4 +465,4 @@ function simSteps(n, inp = {}) {
   for (let i = 0; i < n; i++) { const it = { ...base, ...inp, jumpPressed: !!inp.jump && i === 0 }; G.player.update(1 / 60, it, G.world); G.world.update(1 / 60, G.t += 1 / 60, G.player); }
   return { pos: G.player.pos.toArray().map((v) => +v.toFixed(2)), ground: G.player.onGround, mode: G.player.mode, grabbed: !!G.player.grabbed };
 }
-window.__game = { G, ctx, cam, composer, finish, renderer, camera, simSteps, dlg };
+window.__game = { get titleRoom(){return titleRoom;}, G, ctx, cam, composer, finish, renderer, camera, simSteps, dlg, buildLevel };

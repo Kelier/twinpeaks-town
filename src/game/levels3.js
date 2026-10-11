@@ -27,17 +27,27 @@ export const shore = {
     solid([-18, -.6, -7], [25, 0, 10], pebbles, { warp: 0 });
     // the lake: a black mirror at the back, mist lying on it
     add(slab([-40, -.05, -40], [60, .0, -3.2], mat('#0a1218', { rough: .08, metal: .2 }), { warp: 0, cast: false }));
+    // A low irregular far bank grounds the fir roots beyond the water.
+    add0(slab([-60,-.6,-46],[80,.02,-22],mat('#101a19',{rough:.98}),{warp:.12,cast:false}));
     // far shore: pines as silhouettes
     const pine = mat('#0c1210', { rough: 1 });
     for (let i = 0; i < 26; i++) { const x = -30 + i * 3.4 + Math.sin(i * 7.1) * 1.2, h = 7 + (i * 37 % 5); add(cylinder(x, 0, -26 - (i % 3) * 3, 1.3 + (i % 2) * .4, h, pine, { r2: .02, seg: 7, warp: .05 })); }
     // the near shore: rocks (jump), a driftwood crate (push), an embankment up to the road (climb)
-    solid([-6.2, 0, -2.6], [-4.6, .8, 1.7], rock, { warp: .15 });
+    solid([-6.2, 0, -1.8], [-4.6, 1.0, 1.0], rock, { warp: .08 });
     solid([-17, 0, -7], [-16.2, 9, 4], rock, { decor: false });
     solid([12, 0, -2.6], [23, 3.3, 1.7], rock, { warp: .08 });                     // embankment (one collider so the ledge is climbable)
     if (!set) add(slab([12, 3.3, -2.6], [23, 3.32, 1.7], wood, { warp: .02 }));     // road planks
     solid([23, 0, -7], [24, 9, 4], rock);
     const crateMesh = add0(slab([-.8, 0, -.7], [.8, 1.5, .7], mat('#ffffff', { map: TEX.planks('#9a8064', [1, 1]), rough: .85 }), { warp: .03 }));
     crateMesh.position.set(6.5, .75, -.4); crateMesh.userData.offset = V(0, .75, 0);
+    // Plank seams and corner battens give the pushable crate a readable, built silhouette.
+    const batten = mat('#b7a18b', { map: TEX.planks('#96846f', [1, 1]), rough: .9 });
+    for (const x of [-.69, .69]) for (const z of [-.715, .715]) {
+      const rail = slab([x-.065,-.73,z-.025],[x+.065,.73,z+.025],batten,{warp:0}); crateMesh.add(rail);
+    }
+    for (const y of [-.45,-.15,.15,.45]) {
+      const seam=slab([-.8,y-.007,.702],[.8,y+.007,.706],mat('#33261e'),{warp:0,cast:false});crateMesh.add(seam);
+    }
     const crate = world.movable(crateMesh, [1.6, 1.5, 1.4]);
     // grey dawn: a low cold key from the lake side, fog, drizzle
     const dawn = spot('#c8d4e8', 420, V(-4, 12, -14), V(2, 0, 0), { angle: .55, penumbra: .8, distance: 40 }); add0(dawn); add0(dawn.target);
@@ -45,7 +55,8 @@ export const shore = {
     for (const x of [-12, 16]) { const f2 = new THREE.PointLight('#8ea0b8', 10, 18, 1.2); f2.position.set(x, 5, 3); add0(f2); }
     // pale dawn sky laid on the water: a soft streak where the lake catches the light
     const sheen = add0(new THREE.Mesh(new THREE.PlaneGeometry(90, 7), new THREE.MeshBasicMaterial({ color: '#28323e', fog: false })));
-    sheen.rotation.x = -Math.PI / 2; sheen.position.set(4, .02, -12);
+    sheen.rotation.x = -Math.PI / 2; sheen.position.set(4, -.038, -12);
+    sheen.visible = false; // The old opaque strip cut an artificial horizon across the set.
     const sky = add0(new THREE.Mesh(new THREE.PlaneGeometry(160, 30), new THREE.MeshBasicMaterial({ color: '#2a3442', fog: false })));
     sky.position.set(4, 14, -70);
     const fc = add0(fogCards(12, new THREE.Box3(V(-16, .1, -6), V(22, 1.4, 1)), '#a8b4c0', .12)); world.updaters.push((dt) => animateFog(fc, dt));

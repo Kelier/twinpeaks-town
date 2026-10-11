@@ -15,10 +15,11 @@ export function kit(ctx) {
   const puppet = (gltf, height, anim = 'idle') => {
     const model = cloneSkinned(gltf.scene); const box = new THREE.Box3().setFromObject(model);
     const k = height / (box.max.y - box.min.y); model.scale.setScalar(k); model.position.y = -box.min.y * k;
-    model.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; o.frustumCulled = false; } });
+    model.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; o.frustumCulled = false; o.material = Array.isArray(o.material) ? o.material.map(m => m.clone()) : o.material.clone(); } });
     const g = new THREE.Group(); g.add(model); const mixer = new THREE.AnimationMixer(model); const acts = {};
     for (const c of gltf.animations) acts[c.name] = mixer.clipAction(c);
     let cur = null; const play = (n, f = .25) => { const a = acts[n]; if (!a || a === cur) return; a.reset().fadeIn(f).play(); cur?.fadeOut(f); cur = a; };
+    (world.contactSubjects ||= []).push({root:g,width:height*.58,depth:height*.44});
     play(anim); world.updaters.push((dt) => mixer.update(dt));
     return { group: g, model, play, acts, mixer };
   };
@@ -27,6 +28,7 @@ export function kit(ctx) {
     const g = gltf.scene.clone(true);
     g.traverse((o) => {
       if (!o.isMesh) return; o.castShadow = true; o.receiveShadow = true;
+      o.material = Array.isArray(o.material) ? o.material.map(m => m.clone()) : o.material.clone();
       const m = o.material; if (!m?.name?.startsWith('TEX:')) return;
       const kind = m.name.slice(4).split('.')[0]; const f = TEX[kind];
       if (f && !m.map) { m.map = (texOpts[kind] || f)(); m.needsUpdate = true; }
@@ -301,12 +303,12 @@ export const diner = {
         keyItem.enabled = true; ctx.save(); ctx.say(T('玻璃罩摔碎了。有什么东西在地上发亮。', 'The glass dome shatters. Something glints on the floor.'), 3200);
       })();
     };
-    const keyItem = world.interact({ pos: V(10.6, .3, -.6), label: T('捡起钥匙', 'Pick up the key'), radius: 1.3, enabled: false, use: (it) => { it.enabled = false; key.visible = false; ctx.flags.key = true; ctx.save(); sound.pickup(); ctx.say(T('一把后门钥匙。上面刻着「315」。', 'A back-door key, stamped “315”.'), 3200); } });
+    const keyItem = world.interact({ pos: V(10.6, .3, -.6), label: T('捡起钥匙', 'Pick up the key'), radius: 1.3, enabled: false, use: (it) => { it.enabled = false; key.visible = false; ctx.flags.key = true; ctx.flags.domeDown = true; doorItem.label = T('用钥匙打开后门', 'Unlock the back door'); ctx.save(); sound.pickup(); ctx.say(T('拿到后门钥匙「315」。往右走，到尽头靠里侧的后门。', 'Back-door key “315” acquired. Head right to the door in the back lane.'), 5500); ctx.hint(T('后门在最右侧 · W / ↑ 向里走，E / 互动开门', 'Back door: far right · W / ↑ toward the back, E / Use to unlock'), 9000); } });
     // back door
     const door = add(slab([18.05, 0, -2.8], [18.3, 4.5, -.3], mat('#ffffff', { map: TEX.planks('#3f3a30', [1, 2]) }), { warp: .02 }));
     const doorCol = world.solid([17.9, 0, -2.8], [18.3, 4.5, -.3], { noClimb: true });
     const outside = new THREE.PointLight('#6f8cff', 0, 10, 1.5); outside.position.set(20, 2, -1.5); add(outside);
-    world.interact({ pos: V(17.6, 1.4, -1.5), label: T('开门', 'Open the door'), radius: 1.6, use: async (it) => {
+    const doorItem = world.interact({ pos: V(17.6, 1.4, -1.5), label: T('查看后门', 'Check the back door'), radius: 1.6, use: async (it) => {
       if (!ctx.flags.key) { sound.noise({ dur: .2, freq: 700, gain: .2 }); ctx.say(T('锁着。', 'Locked.'), 1500); return; }
       it.enabled = false; sound.click(); sound.creak(.8); outside.intensity = 60;
       const t0 = performance.now(); await new Promise((res) => { const s = () => { const k = Math.min(1, (performance.now() - t0) / 1600); door.position.z = -1.55 - k * 2.4; if (k < 1) requestAnimationFrame(s); else res(); }; s(); });
@@ -314,13 +316,21 @@ export const diner = {
     } });
     ctx.onRestore = (f) => {
       if (f.music) { jukeGlow.material.emissiveIntensity = 2.2; jukeLight.intensity = 40; sound.lounge(); }
-      if (f.domeDown) { domeDown = true; domeGroup.visible = false; world.remove(domeCol); if (!f.key) { scene.add(key); key.position.set(10.6, .1, -.6); key.rotation.x = Math.PI / 2; } }
+      // Puzzle flags are authoritative: old/interrupted saves may contain stale
+      // disabled interaction bits, or a key without the earlier dome flag.
+      if (f.doorOpen) f.key = true;
+      if (f.key) f.domeDown = true;
+      keyItem.enabled = !!f.domeDown && !f.key;
+      key.visible = !f.key;
+      doorItem.enabled = !f.doorOpen;
+      doorItem.label = f.key ? T('用钥匙打开后门', 'Unlock the back door') : T('查看后门', 'Check the back door');
+      if (f.domeDown) { domeDown = true; cup.locked = true; domeGroup.visible = false; world.remove(domeCol); if (!f.key) { scene.add(key); key.position.set(10.6, .1, -.6); key.rotation.x = Math.PI / 2; } }
       if (f.doorOpen) { door.position.z = -3.95; world.remove(doorCol); outside.intensity = 60; }
     };
     const { npc } = kit(ctx);
     npc('norma', { name: T('诺玛', 'Norma'), pos: V(15.2, 0, -1.2), rot: -.4, talk: async () => {
       await ctx.line(T('诺玛', 'Norma'), T('咖啡还热着。樱桃派是今天最后一块。', 'The coffee’s still hot. That’s the last slice of cherry pie today.'), { focus: V(15.2, 1.2, -1.2) });
-      await ctx.line(T('诺玛', 'Norma'), T('后门锁着，钥匙一直放在派罩里——别问我为什么。', 'The back door’s locked. The key lives under the pie dome — don’t ask me why.'));
+      await ctx.line(T('诺玛', 'Norma'), ctx.flags.key ? T('你已经有钥匙了。沿柜台往右走，最右侧靠里的后门就能打开。', 'You have the key. Follow the counter right; the back door is at the far end, toward the rear.') : T('后门锁着，钥匙一直放在派罩里——别问我为什么。', 'The back door’s locked. The key lives under the pie dome — don’t ask me why.'));
     } });
     npc('shelly', { name: T('雪莉', 'Shelly'), pos: V(-6.4, 0, -.9), rot: .5, talk: async () => {
       await ctx.line(T('雪莉', 'Shelly'), T('你也是来问劳拉的吗？', 'Are you here to ask about Laura too?'), { focus: V(-6.4, 1.2, -.9) });
@@ -554,7 +564,7 @@ export const redroom = {
     world.solid([5.2, 0, -3.7], [7.6, 1.1, -1.7]); world.solid([8.0, 0, -3.9], [9.2, 4.2, -2.7], { noClimb: true });
     world.solid([-4.2, 0, -3.6], [-1.4, 1.1, -1.6]); world.solid([-7.4, 0, -3.4], [-5.8, 1.8, -2.0]);
     // light: one hard cold key over the chair, torchiere glow, red wash
-    const key = spot('#dfe8ff', 800, V(-2, 13, 3), V(-2.5, 0, -2), { angle: .34, penumbra: .45, distance: 30 }); add(key); add(key.target);
+    const key = spot('#dfe8ff', 200, V(-2, 13, 3), V(-2.5, 0, -2), { angle: .34, penumbra: .45, distance: 30 }); add(key); add(key.target);
     const keyBeam = add(beam(V(-2, 11, 1.5), V(-2.5, 0, -2), 3.4, '#dfe8ff', .14));
     for (const tx of [-12.4, 1.0, 13.2]) { const tl = new THREE.PointLight('#ffb070', 40, 12, 1.4); tl.position.set(tx, 5.3, -3.1); add(tl); }
     const sat = new THREE.PointLight('#5dff8a', 12, 6, 1.6); sat.position.set(-6.6, 2.7, -2.4); add(sat);

@@ -7,17 +7,14 @@
 - **三种结局**：镜中人「安妮还好吗？」、晨光「梦醒」、低语「二十五年后见」，取决于线索数量、奥黛丽的信任和你在红房间的选择。按 Esc 暂停可以查看「节目单」，里面有十一幕的路线（附集数）和已得线索。
 - **双语**：中文 / English，可在标题页、幕间或导览里切换，选择会被记住。代码里文案写作 `T('中文','English')`，界面文字放在 `src/game/i18n.js`，新增语言就在那里扩展。
 - **两本蜡笔导览**：「大卫·林奇涂鸦本」16 页，「与火同行涂鸦本」11 页。贴纸、胶带、印章、蜡笔儿童画，都由代码在 canvas 上实时绘制。每张贴纸都标了来源编号，还没核实的条目标为「待复核」；电影涉及的创伤内容做了克制处理。入口在标题页和幕间，代码见 `src/game/guide.js`、`guide-data.js`、`guide.css`。
-- **原声带 OST 插槽**：安杰洛·巴达拉曼蒂 / 大卫·林奇的原声带受版权保护，本作不附带音频，也不模仿旋律。每个场景各有一个音轨插槽，并给出建议曲目（如 Laura Palmer's Theme、Audrey's Dance、Dance of the Dream Man、Falling 等）。
-  - 玩家可以在「原声带」面板里放入自己拥有的正版音频，单首或多首都行；多首时按曲名自动配对。文件只保存在浏览器的 IndexedDB 里，不会上传。
-  - 部署方也可以把文件放到 `public/audio/ost/<场景>.mp3`。
-  - 有文件时会淡入原声，合成配乐随之静音，环境声保留；没有文件就播放本作的原创合成配乐。代码见 `src/game/ost.js`。
+- **背景音乐**：使用用户提供的 `Twin Peaks - Julee Cruise - Falling.mp3`，原文件存放在 `public/audio/falling.mp3`。每次进入默认关闭，在首页或暂停菜单点击开关后循环播放。浏览器拒绝播放时显示重试，不自动抢播。切换关卡不重启音乐，切到后台暂停。背景音乐与环境音效独立控制，不叠加旧合成配乐。
 - **27 个人物**：库珀、劳拉、BOB、奥黛丽、杜鲁门、木头女士、巨人、来自另一个地方的人、利兰、萨拉、唐娜、詹姆斯、雪莉、诺玛、鲍比、本·霍恩、露西、安迪、霍克、歌手、乔西、皮特、戈登、阿尔伯特、独臂人、温德姆、娜丁。
 - **操作**：A/D 移动 · W/S 进出景深 · 空格跳（贴着台面跳会自动攀爬）· Shift 跑 · E 互动／交谈／按住抓取 · F 手电 · Esc 幕间与节目单 · M 静音。
 - **存档**：每 1.5 秒和关闭页面时自动保存，内容包括所在幕、位置、谜题进度和剧情树；刷新后在标题页按回车继续。
-- **代码**：`src/game/`，其中 main 负责流程、对话、存档、语言和台口框，story 是播出顺序、线索和结局，levels / levels2 / levels3 是十一幕，ost 是原声带插槽，guide 是导览，另有 gfx、audio、player、world。
+- **代码**：`src/game/`，其中 main 负责流程、对话、存档、语言和台口框，story 是播出顺序、线索和结局，levels / levels2 / levels3 是十一幕，bgm 是背景音乐开关，guide 是导览，另有 gfx、audio、player、world。
 - **人物**：`blender-materials/figurines/figurine.py` 加 `cast_more.py`，每个人偶由各部件体素融合成一整块封闭曲面，不会穿模。用 `build_all.sh` 批量建模，再由 `cast-mpfb/export_puppet.py` 加动作导出到 `public/game/cast/*.glb`。
 - **房间**：`blender-materials/game-sets/build_set.py --set=<shore|diner|station|cabin|palmer|hotel|roadhouse|cell|forest|redroom>` 导出 `public/game/sets/*.glb`。
-- **自动化**：`scripts/game-mechanics.mjs`（谜题）、`game-ai.mjs`（BOB 与结局）、`game-save.mjs`（刷新续玩）、`game-story.mjs <幕…>`（各幕截图与对话）、`game-shore.mjs`（湖岸与拘留室谜题）、`game-ui.mjs`（语言、导览、原声带插槽）、`guide-capture.mjs`（导览逐页截图）。需要开发服务器在 5191 端口运行。
+- **自动化**：`scripts/game-mechanics.mjs`（谜题）、`game-ai.mjs`（BOB 与结局）、`game-save.mjs`（刷新续玩）、`game-story.mjs <幕…>`（各幕截图与对话）、`game-shore.mjs`（湖岸与拘留室谜题）、`game-ui.mjs`（旧版语言与导览检查）、`guide-capture.mjs`（导览逐页截图）。需要开发服务器在 5191 端口运行。
 
 ---
 
@@ -67,3 +64,13 @@ WASD / 方向键移动与环视；鼠标拖拽环视；双击锁定鼠标；Tab 
 修复大北方旅馆拉灯绳后因月光变量作用域错误导致剧情中断、角色锁定的问题。读档时会恢复未完成剧情的灯绳交互；已完成剧情保持门开启。使用原浏览器和原站点地址刷新后继续即可，无需清除存档。
 
 回归验证（开发服务器默认 5191 端口）：`node scripts/game-hotel-regression.mjs`，覆盖中断存档、拉绳剧情、完成后读档以及走出旅馆进入第八幕。
+
+## 暗红微缩剧场与手机操作（2026-10-11）
+
+只保留暗红 3D 剧场。贴纸 Canvas 游戏、主题切换及旧偏好已移除，原有剧情、线索、存档与第七幕灯绳修复保留。导览、语言与操作说明收在「档案与设置」。
+
+- 首页：真实 Blender Cycles 渲染的微缩红房，完整黑色景箱、红丝绒帘、黑白折线地板、黑皮椅、土星灯和金属落地灯。首页现在实时加载 Blender 导出的 GLB；拖动或方向键转动视角，点击落地灯或「开灯 / 关灯」切换真实灯光，L 切灯，Home 复位。带轻微自动与指针视角运动，遵守减少动态效果偏好。原离线渲染图仅作为加载与错误后备。进入游戏时释放首页 WebGL 场景。
+- Blender：`blender-materials/title-redroom/title-redroom.blend` 可直接打开渲染；`render_title.py` 使用随包的 `miniature-production/twin-peaks-miniatures.blend` 重建标题镜头与灯光。
+- 手机横竖屏：左侧四方向控制景深与左右移动；右侧跑、灯、跳和互动。拖动物件时同时按住互动和方向；取消触摸或失焦会释放输入。右上角暂停。
+- 实现：`src/game/theme.css`、`touch-controls.js`、`bgm.js`；首页模型为 `public/themes/red-room-interactive.glb`，交互见 `title-room.js`，后备图为 `red-room-miniature.webp`。`export_title.py` 可从 .blend 重新导出 GLB。
+- 检查：`node scripts/redroom-review.mjs`、`node scripts/redroom-touch-test.mjs`、`node scripts/game-hotel-regression.mjs`，开发服务器默认 5191。使用 Chromium 手机视口仿真，未覆盖所有实体手机的性能差异。

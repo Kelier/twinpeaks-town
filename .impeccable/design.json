@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-11T05:36:35.716114+00:00",
+  "title": "Design System: 双峰 · 小小梦魇",
+  "extensions": {
+    "colorMeta": {
+      "surround": {
+        "role": "neutral",
+        "displayName": "Near-black theatre"
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Warm ivory"
+      },
+      "action-rule": {
+        "role": "primary",
+        "displayName": "Restrained brass"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "TV Serif",
+        "purpose": "Existing self-hosted Noto Serif SC subset with system fallbacks; opening title."
+      }
+    },
+    "shadows": [
+      {
+        "name": "miniature",
+        "value": "drop-shadow(0 28px 32px #0008)",
+        "purpose": "Applies only to the loading/error poster, not the live Three.js canvas."
+      },
+      {
+        "name": "touch",
+        "value": "0 3px 10px #0003",
+        "purpose": "Restrained separation for translucent controls."
+      },
+      {
+        "name": "subtitle",
+        "value": "0 2px 12px #000, 0 0 2px #000",
+        "purpose": "Game subtitle readability."
+      },
+      {
+        "name": "gameplay-contact",
+        "value": "support y + .008 world units; strength .62 * exp(-height * 1.3); spread 1 + height * .45; hidden at height >= 3",
+        "purpose": "Soft planar patches under player, registered cast and movable props, following the highest eligible solid support. Shader approximation; not ray-traced shadows or global ambient occlusion."
+      },
+      {
+        "name": "gameplay-cast-shadow-bias",
+        "value": "bias -.00008; normalBias .008",
+        "purpose": "Shared gameplay light-shadow calibration in src/game/immersion.js; independent from title viewer and CSS shadows."
+      }
+    ],
+    "motion": [
+      {
+        "name": "room-arrive",
+        "value": "1.5s cubic-bezier(.16,1,.3,1)",
+        "purpose": "Loading/error poster entrance only; disabled by reduced motion."
+      },
+      {
+        "name": "music-thumb",
+        "value": ".2s transform",
+        "purpose": "12px selected displacement; disabled by reduced motion."
+      },
+      {
+        "name": "title-exit",
+        "value": "1s ease-out",
+        "purpose": "Existing title fade; reduced-motion CSS suppresses it."
+      },
+      {
+        "name": "title-camera-drift",
+        "value": "sin(time * .35) * .025 radians",
+        "purpose": "Restrained idle yaw; suppressed during drag and by reduced-motion preference."
+      },
+      {
+        "name": "title-camera-and-light-damping",
+        "value": "THREE.MathUtils.damp(..., 7, dt)",
+        "purpose": "Smooth explicit rotation and light intensity transitions."
+      },
+      {
+        "name": "title-canvas-crossfade",
+        "value": ".5s opacity",
+        "purpose": "Live canvas replaces fallback when the GLB loads; disabled by reduced motion."
+      },
+      {
+        "name": "title-render-schedule",
+        "value": "up to 30fps; pixel ratio at most 1.5",
+        "purpose": "Scheduling and resolution caps, not measured device throughput; hidden-tab render work is skipped."
+      },
+      {
+        "name": "gameplay-lake-normal",
+        "value": "sin(viewPosition.x * 3 + time * .55) * .055; cos(viewPosition.z * 4 + time * .4) * .025",
+        "purpose": "Subtle shader normal perturbation on water/lake standard materials; time freezes at zero with reduced motion."
+      },
+      {
+        "name": "gameplay-velvet-breath",
+        "value": "sin(position.x * 1.8 + time * .38) * .018 * (1 - clamp(position.y / 9, 0, 1))",
+        "purpose": "Small curtain/velvet vertex displacement; time freezes at zero with reduced motion. Does not disable unrelated gameplay animation."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "touch-layout",
+        "value": "(pointer: coarse), (max-width: 760px)"
+      },
+      {
+        "name": "portrait-title",
+        "value": "(max-width: 760px) and (orientation: portrait)"
+      },
+      {
+        "name": "narrow-phone",
+        "value": "380px"
+      },
+      {
+        "name": "short-landscape",
+        "value": "(max-height: 520px) and (orientation: landscape)"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Enter dream",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "html": "<button class=\"ds-enter\">进入梦境 →</button>",
+      "css": ".ds-enter{font-family:var(--serif,'TV Serif',Georgia,serif);cursor:pointer;background:transparent;color:#e5d7be;border:0;border-bottom:1px solid #947753;padding:13px 32px 13px 0;min-height:48px;max-width:320px;width:100%;font-size:17px;letter-spacing:.15em;text-align:left}.ds-enter:hover{color:#fff5df}.ds-enter:focus-visible{outline:2px solid #ebc998;outline-offset:5px;}",
+      "description": "Leading start or continue action beside the miniature."
+    },
+    {
+      "name": "Archive entry",
+      "kind": "button",
+      "refersTo": "archive-entry",
+      "html": "<button class=\"ds-archive\">档案与设置</button>",
+      "css": ".ds-archive{font-family:var(--serif,'TV Serif',Georgia,serif);cursor:pointer;background:none;border:0;border-bottom:1px solid #6c5643;color:#eedcc6;font-size:12px;letter-spacing:.08em;padding:12px 0;min-height:44px}.ds-archive:hover{color:#fff1d8}.ds-archive:focus-visible{outline:2px solid #ebc998;outline-offset:5px;}",
+      "description": "Underlined quiet action opening archive content."
+    },
+    {
+      "name": "Quiet help",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "html": "<button class=\"ds-help\">如何游玩</button>",
+      "css": ".ds-help{font-family:var(--serif,'TV Serif',Georgia,serif);cursor:pointer;background:none;border:0;color:#d2bfa8;font-size:12px;letter-spacing:.08em;padding:12px 0}.ds-help:hover{color:#fff1d8}.ds-help:focus-visible{outline:2px solid #ebc998;outline-offset:5px;}",
+      "description": "Footer help action."
+    },
+    {
+      "name": "Music switch",
+      "kind": "button",
+      "refersTo": "music-toggle",
+      "html": "<button class=\"ds-music\" aria-pressed=\"false\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 10v4m4-8v12m4-15v18m4-15v12m4-8v4\"/></svg><span>背景音乐 · 关闭</span><i aria-hidden=\"true\"></i></button>",
+      "css": ".ds-music{font-family:var(--serif,'TV Serif',Georgia,serif);cursor:pointer;display:flex;align-items:center;gap:12px;min-height:44px;padding:8px 0;border:0;background:none;color:#d5c5ae;font-size:12px;letter-spacing:.03em}.ds-music svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.25}.ds-music i{width:26px;height:14px;border:1px solid #8a7660;border-radius:20px;position:relative;margin-left:4px}.ds-music i:after{content:\"\";position:absolute;width:8px;height:8px;background:#b4a28c;border-radius:50%;left:2px;top:2px;transition:transform .2s}.ds-music[aria-pressed=true] i{background:#682a31;border-color:#c19270}.ds-music[aria-pressed=true] i:after{background:#f4d8b1;transform:translateX(12px)}.ds-music:hover{color:#fff0dc}.ds-music:focus-visible{outline:2px solid #ebc998;outline-offset:5px;}@media(prefers-reduced-motion:reduce){.ds-music i:after{transition:none}}",
+      "description": "Explicit opt-in, shared by title and pause; rendering snippet has no audio behavior."
+    },
+    {
+      "name": "Touch action",
+      "kind": "button",
+      "refersTo": "touch-button",
+      "html": "<button class=\"ds-touch\">跳</button>",
+      "css": ".ds-touch{font-family:var(--serif,'TV Serif',Georgia,serif);cursor:pointer;touch-action:none;min-width:44px;min-height:44px;padding:7px;border-radius:50%;font-size:11px;background:#1c141bbd;border:1px solid #ac927559;color:#e9d5b7;box-shadow:0 3px 10px #0003}.ds-touch:active,.ds-touch.held{background:#76333ee6;border-color:#d2a783}.ds-touch:focus-visible{outline:2px solid #ebc998;outline-offset:5px;}",
+      "description": "Circular translucent gameplay action."
+    },
+    {
+      "name": "Touch hold",
+      "kind": "button",
+      "refersTo": "touch-hold",
+      "html": "<button class=\"ds-hold\">互动 / 抓取</button>",
+      "css": ".ds-hold{font-family:var(--serif,'TV Serif',Georgia,serif);cursor:pointer;touch-action:none;min-width:88px;min-height:44px;padding:10px 16px;border-radius:28px;font-size:11px;background:#1c141bbd;border:1px solid #ac927559;color:#e9d5b7;box-shadow:0 3px 10px #0003}.ds-hold:active,.ds-hold.held{background:#76333ee6;border-color:#d2a783}.ds-hold:focus-visible{outline:2px solid #ebc998;outline-offset:5px;}",
+      "description": "Wide hold action combined with a direction to drag objects."
+    },
+    {
+      "name": "Room light",
+      "kind": "button",
+      "refersTo": "room-light",
+      "description": "Explicit real-light toggle; aria-pressed reflects the current lit state.",
+      "html": "<button class=\"ds-room-light\" aria-pressed=\"true\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M9 17h6m-5 3h4M8 13a6 6 0 1 1 8 0c-1 1-1 2-1 2H9s0-1-1-2Z\"/></svg><span>关灯</span></button>",
+      "css": ".ds-room-light{font-family:var(--serif,Georgia,serif);display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 14px;color:var(--paper,#e8dcc6);border:1px solid #897259;background:#151113d9;border-radius:24px;font-size:12px;cursor:pointer}.ds-room-light svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5}.ds-room-light[aria-pressed=false]{color:#c8bba7;background:#0e1118e8}.ds-room-light:disabled{opacity:.4;cursor:wait}.ds-room-light:focus-visible{outline:2px solid #ebc998;outline-offset:5px;color:#fff2dc}"
+    }
+  ],
+  "narrative": {
+    "northStar": "An empty miniature Red Room",
+    "overview": "A complete interactive Blender miniature sits in a near-black theatre with warm serif lettering and restrained brass actions. A separate Three.js viewer renders the exported GLB, supports bounded mouse/touch/keyboard rotation and toggles real lighting through the floor lamp or an explicit button. The poster is only a loading/error fallback. Entering disposes the viewer and opens the existing eleven-act Three.js game. Falling remains explicit opt-in per visit, independent from environmental effects. There is no paper mode; separate TV mode remains retained. All eleven acts extend this world with support-aware planar contact shadows, restrained environment reflections, selective material microdetail and readable floor depth. Authored chapter lighting remains distinct; gameplay rendering is separate from the title viewer.",
+    "keyCharacteristics": [
+      "Complete interactive miniature silhouette and visible plinth",
+      "Clear continue/new-game hierarchy outside the artwork",
+      "One live 3D game with keyboard and translucent touch inputs",
+      "Explicit music state independent from environmental effects",
+      "Grounded puppets and movable props, tactile materials and distinct chapter lighting"
+    ],
+    "rules": [
+      {
+        "name": "Whole room",
+        "body": "Keep the miniature and display plinth visible across responsive title layouts.",
+        "section": "elevation"
+      },
+      {
+        "name": "Honest rendering scope",
+        "body": "The live title loads an actual Blender-exported GLB in Three.js; the offline Cycles poster is only a loading/error fallback. Runtime materials do not guarantee Cycles parity.",
+        "section": "elevation"
+      },
+      {
+        "name": "Support before atmosphere",
+        "body": "Align visible feet and movable mesh bases with physical support first. Contact patches follow eligible colliders and fade while airborne; they do not repair geometry or replace collision.",
+        "section": "elevation"
+      },
+      {
+        "name": "Restrained gameplay materials",
+        "body": "Preserve authored base colors and chapter light cues. Interior environment intensity is .18; shore/forest .045. Selective bump and roughness distinguish cloth, leather, stone and timber without making every material metallic.",
+        "section": "elevation"
+      },
+      {
+        "name": "Source boundaries",
+        "body": "Title remains governed by .impeccable/red-room-title-brief.md and src/game/title-room.js. Gameplay follows .impeccable/game-immersion-brief.md; immersion.js owns shared treatment, gfx.js rendering/textures, and level/player/world modules authored geometry and support. docs/immersion-audit.md records scope. Neither design file establishes test success or review disposition. Retained tv.html experience is separate.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do preserve explicit music opt-in each visit.",
+      "Do keep environmental effects separately controllable.",
+      "Do preserve input, focus and held states.",
+      "Do retain editable Blender source and raster provenance.",
+      "Do preserve mouse, touch and keyboard room interaction and reduced-motion support.",
+      "Do align visible feet, prop bases and collider support before adjusting atmospheric effects.",
+      "Do preserve distinct chapter light cues and material differences across all eleven acts."
+    ],
+    "donts": [
+      "Don't reintroduce paper mode or a theme picker.",
+      "Don't replace the live viewer with the poster except during loading or failure.",
+      "Don't promise Cycles material parity in live rendering.",
+      "Don't autoplay Falling or persist its enabled state.",
+      "Don't equate browser emulation with physical-device tests.",
+      "Don't conceal contact or geometry errors with darker grading, thicker fog or stronger bloom.",
+      "Don't describe planar contact patches as ray tracing or global ambient occlusion."
+    ]
+  }
+}

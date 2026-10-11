@@ -12,7 +12,7 @@ export class Player {
     const model = cloneSkinned(gltf.scene);
     const box = new THREE.Box3().setFromObject(model); const h = box.max.y - box.min.y;
     const k = H / h; model.scale.setScalar(k); model.position.y = -box.min.y * k; model.userData.baseY = model.position.y;
-    model.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; o.frustumCulled = false; if (o.material) { o.material.roughness = Math.max(.6, o.material.roughness ?? .7); } } });
+    model.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; o.frustumCulled = false; if (o.material) { o.material = o.material.clone(); o.material.roughness = Math.max(.6, o.material.roughness ?? .7); } } });
     this.model = model; this.root.add(model);
     this.mixer = new THREE.AnimationMixer(model);
     this.actions = {};

@@ -100,7 +100,7 @@ export const roadhouse = {
     world.solid([-3, 0, -4.6], [7, .85, -2.2]);                           // stage
     world.solid([10, 0, -4.2], [16, .9, -2.8]); world.solid([10.5, 0, -2.8], [15.5, 1.5, -1.9]);   // booth + table
     // stage light, blue wash, table lamps
-    const stage = spot('#ffd9c8', 600, V(2, 9, 1.5), V(2, .9, -3.3), { angle: .28, penumbra: .45, distance: 22 }); add(stage); add(stage.target);
+    const stage = spot('#ffd9c8', 150, V(2, 9, 1.5), V(2, .9, -3.3), { angle: .28, penumbra: .45, distance: 22 }); add(stage); add(stage.target);
     const stageBeam = add(beam(V(2, 8.5, 1), V(2, .9, -3.2), 1.8, '#ffd9c8', .16));
     const blue = new THREE.PointLight('#3a5cff', 30, 26, 1.3); blue.position.set(2, 6, -1); add(blue);
     for (const x of [-12, 13]) { const l = new THREE.PointLight('#ff9a50', 14, 7, 1.6); l.position.set(x, 2.6, -2.2); add(l); }

@@ -1,0 +1,147 @@
+{
+  "captureMode": "production shaders; on-demand full-resolution render; not a performance benchmark",
+  "result": [
+    {
+      "id": "shore",
+      "feet": 9.999999999999999e-05,
+      "physicsY": 0.0001,
+      "contacts": {
+        "contacts": 4,
+        "environment": true
+      },
+      "movables": [
+        {
+          "geometryBottom": 0,
+          "colliderBottom": 0
+        }
+      ]
+    },
+    {
+      "id": "diner",
+      "feet": 9.999999999999999e-05,
+      "physicsY": 0.0001,
+      "contacts": {
+        "contacts": 7,
+        "environment": true
+      },
+      "movables": [
+        {
+          "geometryBottom": 2.150000011920929,
+          "colliderBottom": 2.15
+        }
+      ]
+    },
+    {
+      "id": "station",
+      "feet": 9.999999999999999e-05,
+      "physicsY": 0.0001,
+      "contacts": {
+        "contacts": 8,
+        "environment": true
+      },
+      "movables": [
+        {
+          "geometryBottom": 1.1920928966180355e-08,
+          "colliderBottom": 0
+        }
+      ]
+    },
+    {
+      "id": "dream",
+      "feet": 9.999999999999999e-05,
+      "physicsY": 0.0001,
+      "contacts": {
+        "contacts": 3,
+        "environment": true
+      },
+      "movables": []
+    },
+    {
+      "id": "cabin",
+      "feet": 9.999999999999999e-05,
+      "physicsY": 0.0001,
+      "contacts": {
+        "contacts": 2,
+        "environment": true
+      },
+      "movables": []
+    },
+    {
+      "id": "palmer",
+      "feet": 9.999999999999999e-05,
+      "physicsY": 0.0001,
+      "contacts": {
+        "contacts": 4,
+        "environment": true
+      },
+      "movables": []
+    },
+    {
+      "id": "hotel",
+      "feet": 9.999999999999999e-05,
+      "physicsY": 0.0001,
+      "contacts": {
+        "contacts": 4,
+        "environment": true
+      },
+      "movables": [
+        {
+          "geometryBottom": 2.384185793236071e-08,
+          "colliderBottom": 0
+        }
+      ]
+    },
+    {
+      "id": "roadhouse",
+      "feet": 9.999999999999999e-05,
+      "physicsY": 0.0001,
+      "contacts": {
+        "contacts": 7,
+        "environment": true
+      },
+      "movables": []
+    },
+    {
+      "id": "cell",
+      "feet": 9.999999999999999e-05,
+      "physicsY": 0.0001,
+      "contacts": {
+        "contacts": 6,
+        "environment": true
+      },
+      "movables": [
+        {
+          "geometryBottom": 2.384185793236071e-08,
+          "colliderBottom": 0
+        }
+      ]
+    },
+    {
+      "id": "forest",
+      "feet": 9.999999999999999e-05,
+      "physicsY": 0.0001,
+      "contacts": {
+        "contacts": 4,
+        "environment": true
+      },
+      "movables": [
+        {
+          "geometryBottom": -0.01197693943977407,
+          "colliderBottom": 0
+        }
+      ]
+    },
+    {
+      "id": "redroom",
+      "feet": 9.999999999999999e-05,
+      "physicsY": 0.0001,
+      "contacts": {
+        "contacts": 3,
+        "environment": true
+      },
+      "movables": []
+    }
+  ],
+  "errors": [],
+  "mobileContext": "isMobile and hasTouch, portrait390x844 and landscape844x390; successful MOBILE=1 run"
+}

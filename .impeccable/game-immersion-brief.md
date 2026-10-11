@@ -1,0 +1,7 @@
+# Gameplay spatial refinement
+Mode: Experience. Scope: all eleven acts in src/game/{main,gfx,levels,levels2,levels3,player,world,immersion}.js. Preserve title viewer, story, save schema, puzzles, music opt-in and touch controls.
+User intent: remove apparent clipping/floating; richer physically coherent atmosphere, materials and lighting throughout; inspect desktop/mobile. User pinned Twin Peaks miniature puppet theatre, dark red, retro, psychological unease. Taste-Skill installed from leonxlnx/taste-skill; use existing-project audit, not its generic marketing composition presets.
+Direction: code-led extension, not replacement. Physical contact comes before post effects. Distinct existing chapter light colors remain. Avoid indiscriminate bloom/fog/black crush. Environment reflection should reveal material differences, not make every surface metallic.
+First viewport: actual playable shore with grounded feet and crate, lake/far-bank depth, visible interaction targets. Shared improvements apply in all acts. Signature: walk/push/climb objects while shadows follow the support surface and fade when airborne; subtle velvet and water motion.
+Quality bar: inspect all eleven acts and portrait/landscape mobile; verify movable geometry vs collider bounds, controls and hotel regression. Software Chromium is functional evidence, not physical-phone FPS certification. Explicit limitations must remain in release notes.
+Unresolved: no new plot or asset-style decisions needed.

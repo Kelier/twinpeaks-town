@@ -28,7 +28,7 @@ const FinishShader = {
     uniform sampler2D tDiffuse; uniform float time, fade, flash, red, bars; uniform vec2 res; varying vec2 vUv;
     float h(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233))) * 43758.5453); }
     vec3 tap(vec2 uv, float k){
-      vec2 d = (uv-.5); float ca = .0016 + .004*dot(d,d);
+      vec2 d = (uv-.5); float ca = .0004 + .001*dot(d,d);
       return vec3(texture2D(tDiffuse, uv + d*ca*k).r, texture2D(tDiffuse, uv).g, texture2D(tDiffuse, uv - d*ca*k).b);
     }
     void main(){
@@ -37,7 +37,7 @@ const FinishShader = {
       float band = smoothstep(.18, .5, abs(uv.y-.52)*1.35);
       vec2 px = 1./res; vec3 c = tap(uv,1.);
       if (band > .01){
-        vec3 acc = c; float r = band*3.2;
+        vec3 acc = c; float r = band*1.6;
         for(int i=0;i<8;i++){ float a = float(i)*.785398; acc += tap(uv + vec2(cos(a),sin(a))*px*r*(1.+float(i/4)), 1.); }
         c = mix(c, acc/9., band);
       }
@@ -55,8 +55,8 @@ const FinishShader = {
       // vignette + grain + gentle flicker
       vec2 v = uv-.5; v.x *= res.x/res.y*.8;
       c *= mix(.25, 1., smoothstep(1.0, .3, length(v)));
-      float g = h(uv*res + fract(time)*91.7) - .5; c += g*.045;
-      c *= .985 + .015*sin(time*47.);
+      float g = h(uv*res + fract(time)*91.7) - .5; c += g*.024;
+      c *= .998 + .002*sin(time*1.7);
       c = c*fade + vec3(flash);
       float lb = step(uv.y, bars) + step(1.-bars, uv.y); c = mix(c, vec3(0.), lb);
       gl_FragColor = vec4(max(c, 0.), 1.);
@@ -117,7 +117,7 @@ const hex = (c) => '#' + new THREE.Color(c).getHexString();
 
 export const TEX = {
   plaster: (base = '#3a2f28', rep) => canvasTexture('plaster' + base, (c, s, { fbm }) => {
-    const col = new THREE.Color(base); const img = c.createImageData(s, s);
+    const col = new THREE.Color(base).convertLinearToSRGB(); const img = c.createImageData(s, s);
     for (let y = 0; y < s; y++) for (let x = 0; x < s; x++) {
       const v = .82 + fbm(x / s * 9, y / s * 9, 4) * .3; const i = (y * s + x) * 4;
       img.data[i] = col.r * 255 * v; img.data[i + 1] = col.g * 255 * v; img.data[i + 2] = col.b * 255 * v; img.data[i + 3] = 255;
@@ -135,11 +135,11 @@ export const TEX = {
     for (let x = 0; x < s; x += s / 8) { c.fillStyle = 'rgba(0,0,0,.18)'; c.fillRect(x, 0, 2, s); }
   }, { repeat: rep || [4, 2], grime: .85, soot: .5 }),
   planks: (base = '#3b2516', rep) => canvasTexture('planks' + base, (c, s, { fbm, rnd }) => {
-    const col = new THREE.Color(base); const img = c.createImageData(s, s); const rows = 8;
+    const col = new THREE.Color(base).convertLinearToSRGB(); const img = c.createImageData(s, s); const rows = 8;
     const shade = Array.from({ length: rows }, () => .75 + rnd() * .4);
     for (let y = 0; y < s; y++) for (let x = 0; x < s; x++) {
       const r = Math.floor(y / s * rows), gy = (y / s * rows) % 1;
-      const grain = .85 + .25 * Math.sin((x / s * 40 + fbm(x / s * 3, y / s * 30 + r, 3) * 8) * 2.2);
+      const grain = .9 + .055 * Math.sin((y / s * 220 + fbm(x / s * 3, y / s * 18 + r, 3) * 4) * 2.2) + (fbm(x / s * 2, y / s * 70, 3) - .5) * .16;
       const seam = gy < .04 || gy > .97 ? .35 : 1;
       const v = shade[r] * grain * seam; const i = (y * s + x) * 4;
       img.data[i] = col.r * 255 * v; img.data[i + 1] = col.g * 255 * v; img.data[i + 2] = col.b * 255 * v; img.data[i + 3] = 255;
@@ -217,14 +217,14 @@ export const TEX = {
     } c.putImageData(img, 0, 0);
   }, { repeat: rep || [6, 2], grime: .3, soot: 0 }),
   bark: (base = '#2a211a', rep) => canvasTexture('bark' + base, (c, s, { fbm }) => {
-    const col = new THREE.Color(base); const img = c.createImageData(s, s);
+    const col = new THREE.Color(base).convertLinearToSRGB(); const img = c.createImageData(s, s);
     for (let y = 0; y < s; y++) for (let x = 0; x < s; x++) {
       const v = .55 + .7 * Math.abs(Math.sin(x / s * 38 + fbm(x / s * 4, y / s * 2, 4) * 6)) * fbm(x / s * 10, y / s * 3, 3); const i = (y * s + x) * 4;
       img.data[i] = col.r * 255 * v; img.data[i + 1] = col.g * 255 * v; img.data[i + 2] = col.b * 255 * v; img.data[i + 3] = 255;
     } c.putImageData(img, 0, 0);
   }, { repeat: rep || [2, 3], grime: .2, soot: 0 }),
   fabric: (base, rep) => canvasTexture('fab' + base, (c, s, { fbm }) => {
-    const col = new THREE.Color(base); const img = c.createImageData(s, s);
+    const col = new THREE.Color(base).convertLinearToSRGB(); const img = c.createImageData(s, s);
     for (let y = 0; y < s; y++) for (let x = 0; x < s; x++) {
       const v = .8 + .12 * Math.sin(x * .9) * Math.sin(y * .9) + fbm(x / s * 12, y / s * 12, 3) * .25; const i = (y * s + x) * 4;
       img.data[i] = col.r * 255 * v; img.data[i + 1] = col.g * 255 * v; img.data[i + 2] = col.b * 255 * v; img.data[i + 3] = 255;
@@ -355,8 +355,8 @@ export function fogCards(count, box, color = '#9fb0c8', opacity = .18) {
   }, { grime: 0, size: 256 });
   const g = new THREE.Group(); const r = rng(77);
   for (let i = 0; i < count; i++) {
-    const m = new THREE.Mesh(new THREE.PlaneGeometry(14, 3.5), new THREE.MeshBasicMaterial({ map: fogTex, color, transparent: true, opacity: opacity * (.5 + r() * .7), depthWrite: false, fog: false }));
-    m.position.set(box.min.x + r() * (box.max.x - box.min.x), box.min.y + r() * (box.max.y - box.min.y), box.min.z + r() * (box.max.z - box.min.z));
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(14, 3.5), new THREE.MeshBasicMaterial({ map: fogTex, color, transparent: true, opacity: opacity * (.3 + r() * .35), depthWrite: false, fog: false }));
+    m.position.set(box.min.x + r() * (box.max.x - box.min.x), box.min.y + r() * (box.max.y - box.min.y), Math.min(-2.9, box.min.z + r() * (box.max.z - box.min.z)));
     m.userData.drift = (r() - .5) * .3; m.renderOrder = 5; g.add(m);
   }
   g.userData.box = box;

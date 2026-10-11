@@ -1,0 +1,58 @@
+[
+  {
+    "set": "cabin",
+    "surface": "Floor",
+    "top": 0.0
+  },
+  {
+    "set": "cell",
+    "surface": "Floor",
+    "top": 0.0
+  },
+  {
+    "set": "diner",
+    "surface": "Floor",
+    "top": 0.0
+  },
+  {
+    "set": "forest",
+    "surface": "Ground • east",
+    "top": 0.0
+  },
+  {
+    "set": "forest",
+    "surface": "Ground • west",
+    "top": 0.0
+  },
+  {
+    "set": "hotel",
+    "surface": "Floor",
+    "top": 0.0
+  },
+  {
+    "set": "palmer",
+    "surface": "Floor",
+    "top": 0.0
+  },
+  {
+    "set": "redroom",
+    "surface": "Floor • chevron",
+    "top": 0.0
+  },
+  {
+    "set": "roadhouse",
+    "surface": "Floor",
+    "top": 0.0
+  },
+  {
+    "set": "shore",
+    "surface": "Beach",
+    "top": 0.0
+  },
+  {
+    "set": "station",
+    "surface": "Floor",
+    "top": 0.0
+  }
+]
+PASS: all 10 set assets (11 acts) meet the gameplay support plane.
