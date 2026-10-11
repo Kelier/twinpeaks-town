@@ -1,0 +1,137 @@
+{
+ "diner": {
+  "environment": "diner.glb",
+  "cast": [
+   {
+    "name": "Dale Cooper",
+    "asset": "dale-cooper.glb",
+    "position": [
+     -0.2,
+     0.08,
+     0.7
+    ],
+    "rotation": -0.3,
+    "lying": false
+   },
+   {
+    "name": "Audrey Horne",
+    "asset": "audrey-horne.glb",
+    "position": [
+     1.0,
+     0.08,
+     -0.2
+    ],
+    "rotation": 0.3,
+    "lying": false
+   }
+  ],
+  "hotspots": [
+   [
+    -1.75,
+    1.35,
+    0.6
+   ],
+   [
+    1.0,
+    1.55,
+    -0.2
+   ],
+   [
+    2.9,
+    1.1,
+    1.6
+   ]
+  ],
+  "practicals": [
+   {
+    "position": [
+     -1.6,
+     2.8,
+     -0.8
+    ],
+    "color": "#ffcf8a",
+    "power": 5
+   },
+   {
+    "position": [
+     1.4,
+     2.8,
+     -0.8
+    ],
+    "color": "#ffcf8a",
+    "power": 5
+   },
+   {
+    "position": [
+     2.9,
+     0.9,
+     1.95
+    ],
+    "color": "#ff8a33",
+    "power": 3
+   }
+  ],
+  "key": {
+   "position": [
+    4,
+    7.5,
+    6
+   ],
+   "target": [
+    0,
+    0.5,
+    0
+   ],
+   "color": "#ffe6c8"
+  },
+  "fog": null
+ },
+ "shore": {
+  "environment": "shore.glb",
+  "cast": [
+   {
+    "name": "Pete Martell",
+    "asset": "pete-martell.glb",
+    "position": [
+     -0.9,
+     0.08,
+     0.6
+    ],
+    "rotation": 0.5,
+    "lying": false
+   }
+  ],
+  "hotspots": [
+   [
+    0.6,
+    0.2,
+    0.4
+   ],
+   [
+    -2.5,
+    1.1,
+    1.4
+   ],
+   [
+    -1.5,
+    1.25,
+    -0.62
+   ]
+  ],
+  "practicals": [],
+  "key": {
+   "position": [
+    -5,
+    7,
+    3
+   ],
+   "target": [
+    0,
+    0,
+    0
+   ],
+   "color": "#cfe2ee"
+  },
+  "fog": "#0b1214"
+ }
+}

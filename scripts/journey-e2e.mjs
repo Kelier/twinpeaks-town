@@ -1,0 +1,40 @@
+// End-to-end: nested miniature layers, 1:1 rooms, sticker peeling, sticker-board deduction, both endings.
+import puppeteer from 'puppeteer-core';
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+const browser=await puppeteer.launch({executablePath:'/usr/local/bin/chromium',headless:true,protocolTimeout:600000,args:['--no-sandbox','--use-angle=swiftshader','--enable-unsafe-swiftshader','--disable-dev-shm-usage']});
+const p=await browser.newPage();p.setDefaultTimeout(120000);await p.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'reduce'}]);await p.setViewport({width:1280,height:800,deviceScaleFactor:1});
+const errors=[],passed=[];p.on('pageerror',e=>errors.push(e.message));p.on('console',m=>{if(m.type()==='error'&&!/favicon|404/.test(m.text()))errors.push(m.text());});
+const check=(name,value)=>{assert.ok(value,name);passed.push(name);console.log('PASS',name);};
+const click=async a=>{await p.waitForSelector(`[data-action="${a}"]`);for(const b of await p.$$(`[data-action="${a}"]`)){if(await b.isVisible()){await b.click();return;}}throw new Error('no visible '+a);};
+const g=fn=>p.evaluate(fn);const state=()=>g(()=>window.twinPeaks.state);
+const settle=layer=>p.waitForFunction(l=>{const t=window.twinPeaks;return !t.transitioning&&t.layer===l&&!t.camera.tween;},{},layer);
+const talkTo=async id=>{await click('item:'+id);await p.waitForSelector('.dialogue');};
+try{
+await p.goto('http://localhost:5191/',{waitUntil:'networkidle2',timeout:90000});await g(()=>{localStorage.removeItem('twinpeaks.case.v2');window.twinPeaks.settings.quality='low';window.twinPeaks.applySettings();});await p.reload({waitUntil:'networkidle2'});
+check('标题页是山谷微缩',await g(()=>window.twinPeaks.layer==='valley'));
+await click('enter');await settle('town');check('进入后由山谷飞入小镇层',await p.$('.layer-crumbs .crumb.here')&&await g(()=>window.twinPeaks.layer==='town'));
+await click('dive:lodge');await p.waitForSelector('.dialogue');check('未解锁的旅馆不能进入',await g(()=>window.twinPeaks.layer==='town'));await click('choice:0');
+await click('dive:diner');await settle('set');check('掀开餐馆屋顶进入剖面层',await g(()=>window.twinPeaks.diorama.open==='diner'));
+await talkTo('npc:cooper');check('剖面层可直接与库珀交谈',await p.$eval('.dialogue h2',e=>e.textContent)==='戴尔·库珀');await click('choice:0');await click('choice:0');check('接取调查',(await state()).flags.accepted);
+await click('layer:room');await settle('room');check('走进 1:1 餐馆',await g(()=>window.twinPeaks.world.id==='diner'&&document.body.classList.contains('immersive')));
+await click('item:sticker:pie');await p.waitForFunction(()=>window.twinPeaks.state.stickers.includes('pie'));check('点击发光物件撕下樱桃派贴纸',true);
+await talkTo('receipt');await click('choice:0');check('发现账单并获得账单贴纸',(await state()).evidence.includes('receipt')&&(await state()).stickers.includes('receipt'));
+await click('layer:town');await settle('town');check('旅馆随线索解锁',await g(()=>!document.querySelector('[data-action="dive:lodge"]').hasAttribute('aria-disabled')));
+await click('dive:lodge');await settle('set');await talkTo('npc:audrey');await click('choice:0');await click('choice:0');await click('choice:0');check('奥黛丽交出 315 钥匙',(await state()).evidence.includes('key'));
+await click('layer:town');await settle('town');await click('dive:woods');await settle('set');await click('layer:room');await settle('room');
+await talkTo('npc:margaret');await click('choice:0');await talkTo('radio');await p.$eval('#frequency',e=>{e.value='240';e.dispatchEvent(new Event('input',{bubbles:true}));});await click('choice:0');check('错误频率不能获得录音',!(await state()).evidence.includes('tape'));
+await p.$eval('#frequency',e=>{e.value='315';e.dispatchEvent(new Event('input',{bubbles:true}));});await click('choice:0');check('315 调谐获取录音',(await state()).evidence.includes('tape'));await click('choice:0');
+await g(()=>window.twinPeaks.ui.open('notes'));await click('travel:diner');await settle('room');await talkTo('npc:truman');await click('choice:0');await p.waitForSelector('.board-page');check('杜鲁门打开线索贴纸板',true);
+for(const [id,slot] of [['tape',0],['receipt',1],['key',2]]){await p.click(`[data-pick="${id}"]`);await p.click(`[data-slot="${slot}"]`);}await click('board-check');await p.waitForFunction(()=>document.querySelector('#board-status')?.textContent.length>0);check('错误排列被撕回并提示',!(await state()).flags.deduced);
+await click('board-reset');for(const [id,slot] of [['receipt',0],['key',1],['tape',2]]){await p.click(`[data-pick="${id}"]`);await p.click(`[data-slot="${slot}"]`);}await click('board-check');await p.waitForSelector('.dialogue');check('正确贴纸顺序解锁红幕',(await state()).flags.deduced);
+await click('choice:0');await settle('town');check('红房间在小镇层开放',await g(()=>!document.querySelector('[data-action="dive:redroom"]').hasAttribute('aria-disabled')));
+await click('dive:redroom');await settle('set');await click('layer:room');await settle('room');await talkTo('npc:laura');await click('choice:0');check('聆听结局',(await state()).completed&&(await state()).ending==='listen');
+await click('choice:2');await click('album');await p.waitForSelector('.album-page');const before=(await state()).scrap.length;await p.click('.tray-sticker[data-drag]');await p.waitForFunction(n=>window.twinPeaks.state.scrap.length>n,{},before);check('贴纸贴到手账页并保存',true);
+check('收集到多张贴纸',(await state()).stickers.length>=6);await p.screenshot({path:'.impeccable/review/e2e-album.png'});
+await p.reload({waitUntil:'networkidle2'});check('刷新保留进度与贴纸',(await state()).completed&&(await state()).scrap.length>0);
+await g(()=>{window.twinPeaks.ui.close();});await settle('town');await g(()=>window.twinPeaks.talk('laura'));await click('choice:1');check('另一结局可达',(await state()).ending==='leave');await click('choice:2');
+await p.setViewport({width:390,height:844,deviceScaleFactor:1});await click('album');check('手机手账无横向溢出',await g(()=>document.querySelector('.sheet').scrollWidth<=innerWidth));await click('resume');await p.screenshot({path:'.impeccable/review/e2e-mobile-hud.png'});
+check('手机层级导航可见',await p.$eval('.layer-crumbs',e=>e.getBoundingClientRect().width>0));
+check('运行无未捕获脚本错误',errors.length===0);
+}catch(e){console.log('FAIL',e.message,errors);process.exitCode=1;}finally{await fs.writeFile('docs/redesign/journey-e2e-results.json',JSON.stringify({passed,errors},null,2));await browser.close();}

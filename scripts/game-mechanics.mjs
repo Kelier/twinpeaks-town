@@ -1,0 +1,56 @@
+// Deterministic mechanics test: solves each chapter's puzzle with scripted inputs via the fixed-step hook.
+import puppeteer from 'puppeteer-core';
+const b=await puppeteer.launch({executablePath:'/usr/local/bin/chromium',headless:true,protocolTimeout:600000,args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const p=await b.newPage(); await p.setViewport({width:320,height:180}); await p.goto('http://localhost:5191/',{waitUntil:'networkidle0',timeout:240000});
+await p.waitForSelector('.menu:not([hidden])',{timeout:300000});
+const errs=[]; p.on('pageerror',e=>errs.push(String(e)));
+const sim=(n,inp)=>p.evaluate((n,inp)=>window.__game.simSteps(n,inp),n,inp);
+const ev=(f,...a)=>p.evaluate(f,...a);
+const log=(k,v)=>console.log(k.padEnd(14),JSON.stringify(v));
+await ev(()=>{const {G}=window.__game; G.state='play'; G.player.mode='normal'; G.player.model.rotation.set(0,G.player.yaw,0); G.player.model.position.y=G.player.model.userData.baseY;});
+await ev(()=>window.__game.ctx.goto('hotel')); await new Promise(r=>setTimeout(r,12000));
+await ev(()=>{const {G}=window.__game; G.state='play'; G.player.mode='normal';});
+// --- hotel: push suitcase to the cabinet, climb, pull the cord
+await ev(()=>window.__game.G.player.pos.set(7.2,0,-1.0)); await sim(10,{});
+log('grab+push', await sim(200,{x:-1,grab:true}));
+log('case', await ev(()=>window.__game.G.world.movables[0].min.map(v=>+v.toFixed(2))));
+await sim(10,{});
+log('back off', await sim(30,{x:1}));
+log('jump on case', await sim(50,{x:-1,jump:true,jumpHeld:true}));
+log('settle', await sim(40,{}));
+log('jump cabinet', await sim(60,{x:-1,jump:true,jumpHeld:true}));
+log('settle', await sim(60,{}));
+log('near', await ev(()=>{const {G}=window.__game; const it=G.world.nearestInteractable(G.player.pos); return it?it.label:null;}));
+// --- diner
+await ev(()=>window.__game.ctx.goto('diner')); await new Promise(r=>setTimeout(r,12000));
+await ev(()=>{const {G}=window.__game; G.state='play'; G.player.mode='normal';});
+await ev(()=>window.__game.G.player.pos.set(-4.5,0,-1.25)); await sim(10,{});
+log('d stool', await sim(70,{x:1,jump:true,jumpHeld:true}));
+log('d settle', await sim(40,{}));
+log('d stool2', await sim(50,{x:1,jump:true,jumpHeld:true}));
+log('d settle', await sim(40,{}));
+log('d counter', await sim(60,{z:-1,jump:true,jumpHeld:true}));
+log('d settle', await sim(40,{}));
+log('d walk', await sim(60,{x:1}));
+await ev(()=>window.__game.G.player.pos.set(0.6,2.16,-3.2)); await sim(5,{});
+log('d push cup', await sim(420,{x:1,grab:true}));
+await new Promise(r=>setTimeout(r,2500)); await sim(30,{});
+log('d key on?', await ev(()=>window.__game.G.world.interactables.map(i=>i.label+':'+i.enabled)));
+await ev(()=>window.__game.G.player.pos.set(10.6,0,-.6)); await sim(5,{});
+await ev(()=>{const {G}=window.__game; const it=G.world.nearestInteractable(G.player.pos); it&&it.use(it);});
+await ev(()=>window.__game.G.player.pos.set(17,0,-1.5)); await sim(5,{});
+await ev(()=>{const {G}=window.__game; const it=G.world.nearestInteractable(G.player.pos); it&&it.use(it);}); await new Promise(r=>setTimeout(r,2500));
+log('d exit', await sim(80,{x:1}));
+log('d level', await ev(()=>window.__game.G.id));
+await new Promise(r=>setTimeout(r,3000)); await ev(()=>{const g=window.__game; if (g.dlg.resolve) g.dlg.resolve(1);}); await new Promise(r=>setTimeout(r,12000));
+await ev(()=>window.__game.ctx.goto('forest')); await new Promise(r=>setTimeout(r,12000));
+// --- forest: log over ditch
+log('f level', await ev(()=>window.__game.G.id));
+await ev(()=>{const {G}=window.__game; G.state='play'; G.player.mode='normal'; G.player.pos.set(9.1,0,.2);}); await sim(10,{});
+log('f push log', await sim(390,{x:1,grab:true}));
+log('log', await ev(()=>window.__game.G.world.movables[0].min.map(v=>+v.toFixed(2))));
+await sim(20,{});
+log('f cross', await sim(300,{x:1}));
+log('f after', await sim(120,{x:1}));
+console.log('errors', errs.slice(0,5));
+await b.close();

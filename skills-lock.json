@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "img2threejs": {
+      "source": "img2threejs/img2threejs",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "e370372b4061dcc425984103dc6023f153b4996041529b3206d92e053663b477"
+    }
+  }
+}

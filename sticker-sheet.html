@@ -1,0 +1,33 @@
+<!doctype html><html lang="zh"><head><meta charset="UTF-8"><title>Sticker sheet — QA</title>
+<style>
+body{margin:0;font:12px 'Courier New',monospace;letter-spacing:1px}
+section{padding:22px 28px 30px}
+.dark{background:#100b0d;color:#e8e5df}
+.paper{background:#e8e5df;color:#171416}
+h2{font:500 13px Georgia,serif;letter-spacing:3px;margin:0 0 16px;text-transform:uppercase;opacity:.75}
+.row{display:flex;flex-wrap:wrap;gap:30px 26px;align-items:flex-start;margin-bottom:34px}
+.big .row{gap:44px 30px}
+.dark .tp-sticker{--tp-sticker-ghost:#6f675c}
+</style>
+<link rel="stylesheet" href="/src/ui/stickers.css"></head>
+<body>
+<section class="dark" id="d"></section>
+<section class="paper" id="p"></section>
+<script type="module">
+import { STICKERS, stickerHTML, slotHTML, bindStickerTilt } from '/src/ui/stickers.js';
+const ids = Object.keys(STICKERS);
+const block = (title, html, cls='') => `<h2>${title}</h2><div class="row ${cls}">${html}</div>`;
+const fill = (el) => {
+  el.innerHTML =
+    block('140px · normal · label', ids.map((id) => stickerHTML(id, { size: 140, label: true })).join(''), 'big') +
+    block('72px · normal', ids.map((id) => stickerHTML(id, { size: 72 })).join('')) +
+    block('96px · holo', ids.slice(0, 10).map((id) => stickerHTML(id, { size: 96, cls: 'holo' })).join('')) +
+    block('locked · slot · slot.over', [
+      stickerHTML('coffee', { size: 96, cls: 'locked', label: true }), stickerHTML('owl', { size: 72, cls: 'locked' }),
+      slotHTML({ size: 96, label: '贴在这里' }), slotHTML({ size: 96, hint: 'key' }),
+      slotHTML({ size: 96, hint: 'tape' }).replace('slot"', 'slot over"'),
+    ].join(''));
+};
+fill(document.getElementById('d')); fill(document.getElementById('p'));
+bindStickerTilt();
+</script></body></html>

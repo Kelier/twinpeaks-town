@@ -1,0 +1,42 @@
+// New acts: shore (push crate → climb embankment → exit after the clue) and cell (push chair → keys).
+import puppeteer from 'puppeteer-core';
+const b=await puppeteer.launch({executablePath:'/usr/local/bin/chromium',headless:true,protocolTimeout:900000,args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const p=await b.newPage(); await p.setViewport({width:320,height:180}); await p.goto('http://localhost:5191/',{waitUntil:'networkidle0',timeout:240000});
+await p.evaluate(()=>localStorage.clear());
+await p.waitForSelector('.menu:not([hidden])',{timeout:300000});
+const errs=[]; p.on('pageerror',e=>errs.push(String(e)));
+const sim=(n,inp)=>p.evaluate((n,inp)=>window.__game.simSteps(n,inp),n,inp);
+const ev=(f,...a)=>p.evaluate(f,...a); const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const log=(k,v)=>console.log(k.padEnd(14),JSON.stringify(v));
+const go=async(id)=>{await ev((id)=>window.__game.ctx.goto(id),id); await sleep(12000); await ev(()=>{const {G}=window.__game; G.state='play'; G.player.mode='normal'; G.player.model.rotation.set(0,G.player.yaw,0);});};
+await go('shore');
+await ev(()=>{window.__game.G.player.pos.set(11,0,.8);}); await sim(10,{}); log('ground jump to bank (should fail)', (await sim(90,{x:1,jump:true,jumpHeld:true})).pos);
+log('title->shore', await ev(()=>window.__game.G.id));
+// walk + jump over the rock
+await ev(()=>window.__game.G.player.pos.set(-8,0,.3)); await sim(10,{});
+log('jump rock', await sim(90,{x:1,jump:true,jumpHeld:true}));
+// crate: grab from its left and push right to the embankment
+await sim(80,{x:1}); await sim(60,{});
+await ev(()=>{const P=window.__game.G.player; P.mode='normal'; P.pos.set(5.3,0,-.4);}); await sim(10,{});
+log('push crate', await sim(260,{x:1,grab:true}));
+log('crate', await ev(()=>window.__game.G.world.movables[0].min.map(v=>+v.toFixed(2))));
+await sim(10,{}); log('back', await sim(40,{x:-1}));
+log('onto crate', await sim(70,{x:1,jump:true,jumpHeld:true})); await sim(40,{});
+log('climb bank', await sim(90,{x:1,jump:true,jumpHeld:true})); await sim(60,{}); await sim(40,{x:1});
+log('on road?', await ev(()=>window.__game.G.player.pos.toArray().map(v=>+v.toFixed(2))));
+log('clue before', await ev(()=>Object.keys(window.__game.G.story.clues)));
+await ev(()=>{const {G}=window.__game; G.world.interactables.find(i=>/plastic|塑料/.test(i.label)).use({});}); await sleep(600);
+for (let i=0;i<4;i++){ await p.keyboard.press('Enter'); await sleep(800);} await sleep(1000);
+log('clue after', await ev(()=>Object.keys(window.__game.G.story.clues)));
+await ev(()=>{const {G}=window.__game; G.state='play'; G.player.mode='normal'; G.player.pos.set(20,3.31,0);}); await sim(10,{});
+await sim(60,{x:1}); await sleep(30000);
+log('next act', await ev(()=>window.__game.G.id));
+await go('cell');
+await ev(()=>window.__game.G.player.pos.set(-5.8,0,-.3)); await sim(10,{});
+log('push chair', await sim(200,{x:1,grab:true}));
+log('chair', await ev(()=>window.__game.G.world.movables[0].min.map(v=>+v.toFixed(2))));
+await sim(10,{}); await sim(20,{x:-1});
+log('onto chair', await sim(70,{x:1,jump:true,jumpHeld:true})); await sim(40,{});
+log('pos', await ev(()=>window.__game.G.player.pos.toArray().map(v=>+v.toFixed(2))));
+log('near', await ev(()=>{const {G}=window.__game; const it=G.world.nearestInteractable(G.player.pos); return it?it.label:null;}));
+console.log('errors', errs.slice(0,5)); await b.close();

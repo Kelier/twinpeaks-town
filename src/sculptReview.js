@@ -1,0 +1,5 @@
+import * as THREE from 'three';
+import {createCooperStaticPaintedMiniatureModel} from './models/createCooper.ts';
+const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(1);renderer.setClearColor('#e9e6dc');renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1;document.body.appendChild(renderer.domElement);
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(32,innerWidth/innerHeight,.01,100);const model=createCooperStaticPaintedMiniatureModel();scene.add(model);scene.add(new THREE.HemisphereLight('#fff7e5','#6b756d',2));const key=new THREE.DirectionalLight('#fff0d1',3);key.position.set(-3,5,4);scene.add(key);const rim=new THREE.DirectionalLight('#aecbd2',1.5);rim.position.set(3,4,-4);scene.add(rim);
+window.sculpt={renderer,scene,camera,model,view(angle=0){camera.position.set(-.10+Math.sin(angle)*3.54,1.01,Math.cos(angle)*3.54);camera.lookAt(-.10,1.01,0);renderer.render(scene,camera);}};window.sculpt.view();

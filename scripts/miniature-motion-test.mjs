@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const source=fs.readFileSync('src/miniatureStage.js','utf8');
+const body=source.slice(source.indexOf('export class MiniatureStage'),source.indexOf('\nlet instance;')).replace('export class','class');
+const context=vm.createContext({setTimeout:()=>{},performance:{now:()=>0},FOCUS:{}});
+vm.runInContext(body+';globalThis.Stage=MiniatureStage;',context);
+let advances=0;const stage=Object.create(context.Stage.prototype);Object.assign(stage,{clock:{getDelta:()=>.04},host:{isConnected:true},paused:false,reduced:true,time:2,mixers:[{update:()=>advances++}],camera:{position:{lerp:()=>{}},lookAt:()=>{}},look:{lerp:()=>{}},targetLook:{},targetPosition:{},current:null,old:[],renderer:{render:()=>{}}});
+stage.tick();assert.equal(advances,0);assert.equal(stage.time,2);stage.reduced=false;stage.tick();assert.equal(advances,1);assert.equal(stage.time,2.04);
+const report={checks:['Actual MiniatureStage.tick freezes character mixer and stage time when reduced=true','Normal mode advances mixer and time'],testMode:'Isolated production tick with renderer and scheduler stubs; no GPU performance assertion',timestamp:new Date().toISOString()};fs.writeFileSync('.impeccable/review/miniature/motion-test.json',JSON.stringify(report,null,2));console.log('MOTION FIX VERIFIED');

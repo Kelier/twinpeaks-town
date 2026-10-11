@@ -1,0 +1,23 @@
+// Refresh-safety test: make progress in the diner, reload the page, continue, compare state.
+import puppeteer from 'puppeteer-core';
+const b=await puppeteer.launch({executablePath:'/usr/local/bin/chromium',headless:true,protocolTimeout:600000,args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const p=await b.newPage(); await p.setViewport({width:320,height:180}); const errs=[]; p.on('pageerror',e=>errs.push(String(e)));
+await p.goto('http://localhost:5191/',{waitUntil:'networkidle0',timeout:240000}); await p.evaluate(()=>localStorage.clear()); await p.reload({waitUntil:'networkidle0',timeout:240000});
+await p.waitForSelector('.menu:not([hidden])',{timeout:300000}); const sleep=ms=>new Promise(r=>setTimeout(r,ms)); const ev=(f,...a)=>p.evaluate(f,...a);
+const sim=(n,inp)=>ev((n,inp)=>window.__game.simSteps(n,inp),n,inp);
+await ev(()=>window.__game.ctx.goto('diner')); await sleep(12000);
+await ev(()=>{const {G}=window.__game; G.state='play'; G.player.mode='normal';});
+await ev(()=>window.__game.G.player.pos.set(0.6,2.16,-3.2)); await sim(5,{});
+await sim(420,{x:1,grab:true}); await sleep(2500);
+await ev(()=>window.__game.G.player.pos.set(10.6,0,-.6)); await sim(5,{});
+await ev(()=>{const {G}=window.__game; const it=G.world.nearestInteractable(G.player.pos); it&&it.use(it);});
+await ev(()=>window.__game.G.player.pos.set(6,0,.5)); await sim(30,{});
+const before=await ev(()=>{const {G}=window.__game; return {idx:G.id, flags:G.flags, pos:G.player.pos.toArray().map(v=>+v.toFixed(2)), cup:G.world.movables[0].mesh.position.toArray().map(v=>+v.toFixed(2))};});
+await sleep(2500);
+console.log('saved', await ev(()=>localStorage.getItem('tp-little-nightmare-v3').slice(0,200)));
+await p.reload({waitUntil:'networkidle0',timeout:240000}); await p.waitForSelector('.menu:not([hidden])',{timeout:300000});
+console.log('continue btn', await ev(()=>{const b=document.querySelector('[data-act=continue]'); return !b.hidden && b.textContent;}));
+await p.keyboard.press('Enter'); await sleep(14000);
+const after=await ev(()=>{const {G}=window.__game; return {idx:G.id, flags:G.flags, pos:G.player.pos.toArray().map(v=>+v.toFixed(2)), cup:G.world.movables[0].mesh.position.toArray().map(v=>+v.toFixed(2)), keyInt:G.world.interactables.map(i=>i.enabled)};});
+console.log('before',JSON.stringify(before)); console.log('after ',JSON.stringify(after)); console.log('errors',errs.slice(0,3));
+await b.close();

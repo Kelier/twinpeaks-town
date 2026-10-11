@@ -1,0 +1,281 @@
+[
+  {
+    "id": "shore",
+    "title": "THE LAKESHORE",
+    "environment": "shore.glb",
+    "cast": [
+      {
+        "asset": "pete-martell.glb",
+        "name": "Pete Martell",
+        "position": [
+          -2.15,
+          0.08,
+          0.2
+        ],
+        "rotation": 0.2,
+        "scale": 1
+      }
+    ]
+  },
+  {
+    "id": "diner",
+    "title": "DOUBLE R DINER",
+    "environment": "diner.glb",
+    "cast": [
+      {
+        "asset": "dale-cooper.glb",
+        "name": "Dale Cooper",
+        "position": [
+          0.04,
+          0.08,
+          0.64
+        ],
+        "rotation": -0.24,
+        "scale": 1
+      },
+      {
+        "asset": "audrey-horne.glb",
+        "name": "Audrey Horne",
+        "position": [
+          1.03,
+          0.08,
+          -0.24
+        ],
+        "rotation": 0.24,
+        "scale": 1
+      }
+    ]
+  },
+  {
+    "id": "stones",
+    "title": "THE TIBETAN METHOD",
+    "environment": "stones.glb",
+    "cast": [
+      {
+        "asset": "dale-cooper.glb",
+        "name": "Dale Cooper",
+        "position": [
+          0.36,
+          0.08,
+          0.55
+        ],
+        "rotation": -0.35,
+        "scale": 1
+      },
+      {
+        "asset": "harry-truman.glb",
+        "name": "Harry Truman",
+        "position": [
+          1.65,
+          0.08,
+          -0.55
+        ],
+        "rotation": -0.22,
+        "scale": 1
+      }
+    ]
+  },
+  {
+    "id": "redroom",
+    "title": "THE WAITING ROOM",
+    "environment": "redroom.glb",
+    "cast": [
+      {
+        "asset": "laura-palmer.glb",
+        "name": "Laura Palmer",
+        "position": [
+          -1.95,
+          0.08,
+          0.55
+        ],
+        "rotation": 0.38,
+        "scale": 1
+      },
+      {
+        "asset": "dale-cooper.glb",
+        "name": "Dale Cooper",
+        "position": [
+          2.05,
+          0.08,
+          0.7
+        ],
+        "rotation": -0.42,
+        "scale": 1
+      }
+    ]
+  },
+  {
+    "id": "hotel",
+    "title": "THE GREAT NORTHERN",
+    "environment": "hotel.glb",
+    "cast": [
+      {
+        "asset": "dale-cooper.glb",
+        "name": "Dale Cooper",
+        "position": [
+          -0.7,
+          0.08,
+          0.82
+        ],
+        "rotation": 0.1,
+        "scale": 1
+      },
+      {
+        "asset": "the-giant.glb",
+        "name": "The Giant",
+        "position": [
+          1.0,
+          0.08,
+          -0.2
+        ],
+        "rotation": 0.1,
+        "scale": 1
+      }
+    ]
+  },
+  {
+    "id": "roadhouse",
+    "title": "THE ROADHOUSE",
+    "environment": "roadhouse.glb",
+    "cast": [
+      {
+        "asset": "the-giant.glb",
+        "name": "The Giant",
+        "position": [
+          0,
+          0.08,
+          -1.23
+        ],
+        "rotation": 0,
+        "scale": 1
+      },
+      {
+        "asset": "dale-cooper.glb",
+        "name": "Dale Cooper",
+        "position": [
+          1.2,
+          0.08,
+          1.8
+        ],
+        "rotation": 0.2,
+        "scale": 1
+      }
+    ]
+  },
+  {
+    "id": "cell",
+    "title": "THE LAST CONFESSION",
+    "environment": "cell.glb",
+    "cast": [
+      {
+        "asset": "dale-cooper.glb",
+        "name": "Dale Cooper",
+        "position": [
+          0.4,
+          0.08,
+          -0.4
+        ],
+        "rotation": -0.2,
+        "scale": 1
+      },
+      {
+        "asset": "leland-palmer.glb",
+        "name": "Leland Palmer",
+        "position": [
+          1.5,
+          0.08,
+          -1.1
+        ],
+        "rotation": -0.3,
+        "scale": 1
+      }
+    ]
+  },
+  {
+    "id": "cave",
+    "title": "OWL CAVE",
+    "environment": "cave.glb",
+    "cast": [
+      {
+        "asset": "dale-cooper.glb",
+        "name": "Dale Cooper",
+        "position": [
+          0.5,
+          0.08,
+          0.4
+        ],
+        "rotation": -0.1,
+        "scale": 1
+      },
+      {
+        "asset": "harry-truman.glb",
+        "name": "Harry Truman",
+        "position": [
+          1.72,
+          0.08,
+          0.1
+        ],
+        "rotation": 0.2,
+        "scale": 1
+      }
+    ]
+  },
+  {
+    "id": "grove",
+    "title": "GLASTONBURY GROVE",
+    "environment": "grove.glb",
+    "cast": [
+      {
+        "asset": "dale-cooper.glb",
+        "name": "Dale Cooper",
+        "position": [
+          0.2,
+          0.08,
+          0.85
+        ],
+        "rotation": 3.141592653589793,
+        "scale": 1
+      },
+      {
+        "asset": "harry-truman.glb",
+        "name": "Harry Truman",
+        "position": [
+          2,
+          0.08,
+          0.75
+        ],
+        "rotation": 0.2,
+        "scale": 1
+      }
+    ]
+  },
+  {
+    "id": "mirror",
+    "title": "WHO CAME BACK?",
+    "environment": "mirror.glb",
+    "cast": [
+      {
+        "asset": "dale-cooper.glb",
+        "name": "Dale Cooper",
+        "position": [
+          -0.33,
+          0.08,
+          -0.72
+        ],
+        "rotation": 3.141592653589793,
+        "scale": 1
+      },
+      {
+        "asset": "bob.glb",
+        "name": "BOB",
+        "position": [
+          -0.35,
+          0.08,
+          -2.08
+        ],
+        "rotation": 0,
+        "scale": 1
+      }
+    ]
+  }
+]

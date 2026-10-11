@@ -1,0 +1,120 @@
+/* Nested miniature journey + sticker HUD. Layered on top of twinPeaks.css. */
+.game-hud .tp-sticker{pointer-events:none}
+.game-hud{background:linear-gradient(180deg,#100b0dc4,transparent 16%,transparent 74%,#100b0dd9)}
+.game-hud.layer-valley,.game-hud.layer-town{background:linear-gradient(180deg,#100b0d99,transparent 14%,transparent 80%,#100b0dc0)}
+
+/* Place tag: a die-cut sticker slapped on the corner of the screen */
+.place-tag{display:flex!important;align-items:center;gap:14px;top:22px!important;left:26px!important}
+.place-tag>div{display:grid;gap:5px;background:#f5f3ed;color:#171416;padding:9px 16px 9px 14px;transform:rotate(-1.2deg);box-shadow:0 6px 18px #0007;position:relative;clip-path:polygon(0 4%,3% 0,100% 2%,99% 96%,96% 100%,0 98%)}
+.place-tag>div>span{font:9px 'Courier New';letter-spacing:2px;color:#6e101c}
+.place-tag strong{font-size:20px;letter-spacing:3px;font-weight:600;color:#171416}
+.place-tag small{font:10px 'Courier New';color:#555b4d!important}
+.place-badge{filter:drop-shadow(0 6px 10px #0008)}
+
+/* Sticker-book button with live count */
+.album-button{display:inline-flex!important;align-items:center;gap:6px;padding:4px 10px 4px 4px;background:#f5f3ed;color:#171416!important;border-radius:999px;transform:rotate(2deg);box-shadow:0 4px 12px #0006}
+.album-button:hover{background:#fff!important;color:#6e101c!important}
+.album-count{font:bold 11px 'Courier New'}
+.album-button.bump{animation:album-bump .5s cubic-bezier(.3,1.8,.5,1)}
+@keyframes album-bump{0%{transform:rotate(2deg) scale(1)}40%{transform:rotate(-6deg) scale(1.28)}100%{transform:rotate(2deg) scale(1)}}
+
+/* Evidence progress as three sticker slots */
+.case-progress{display:flex;align-items:center;gap:10px}
+.case-progress span{display:inline-flex;gap:6px;align-items:center;margin:0!important}
+.ev-dot{display:inline-block;width:22px;height:22px;border:1.5px dashed #8e7479;border-radius:6px;transform:rotate(-6deg)}
+
+/* Layer breadcrumbs: torn masking-tape labels, deeper layers to the right */
+.layer-crumbs{position:absolute;left:24px;bottom:22px;display:flex;align-items:center;gap:4px;pointer-events:auto}
+.crumb{position:relative;display:grid;text-align:left;gap:2px;padding:8px 14px 9px;min-height:44px;background:#e8dcc0e6;color:#3a2f2a!important;font-size:13px;transform:rotate(var(--tilt));box-shadow:0 3px 10px #0006;clip-path:polygon(2% 0,98% 6%,100% 50%,97% 100%,3% 94%,0 50%)}
+.crumb small{font:8px 'Courier New';letter-spacing:1.5px;color:#7a6a58}
+.crumb.here{background:#6e101c;color:#f5f3ed!important;transform:rotate(var(--tilt)) translateY(-4px) scale(1.06)}
+.crumb.here small{color:#f0c8c8}
+.crumb.deeper{opacity:.72}
+.crumb:hover{background:#f5f3ed;color:#6e101c!important}
+.crumb-sep{color:#e8dcc0;font-style:normal;font-size:18px;opacity:.7}
+
+/* Building stickers on the town layer */
+.town-places{position:absolute;right:24px;bottom:90px;display:grid;gap:8px;pointer-events:auto}
+.place-sticker{display:flex;align-items:center;gap:10px;padding:6px 16px 6px 6px;background:#211317e6;border:1px solid #8e747966;color:#f5f3ed!important;text-align:left;min-width:190px}
+.place-sticker span{display:grid;font-size:13px}.place-sticker small{font:9px 'Courier New';letter-spacing:1px;color:#cbc1c1}
+.place-sticker.open{border-color:#ad3544;box-shadow:0 0 0 1px #ad354455,0 6px 22px #6e101c66}
+.place-sticker.locked{opacity:.6;cursor:not-allowed}
+.place-sticker:hover:not(.locked){background:#6e101c}
+
+/* Item chips: what you can touch here */
+.mini-people{right:24px!important;bottom:90px!important;gap:7px!important}
+.item-chip{display:inline-flex!important;align-items:center;gap:8px;padding:5px 14px 5px 6px!important;min-height:44px;background:#f5f3edf0!important;color:#171416!important;border:0!important;border-radius:4px;box-shadow:0 4px 14px #0007;transform:rotate(-.6deg);font-size:12px}
+.item-chip:nth-child(even){transform:rotate(.8deg)}
+.item-chip:hover{background:#fff!important;color:#6e101c!important;transform:rotate(0) translateX(-4px)}
+.item-chip.glint{background:linear-gradient(110deg,#f5f3ed 30%,#fff3d6 50%,#f5f3ed 70%)!important;background-size:250% 100%!important;animation:chip-glint 2.6s linear infinite}
+@keyframes chip-glint{from{background-position:100% 0}to{background-position:-150% 0}}
+.chip-face{width:30px;height:30px;border-radius:50%;overflow:hidden;background:#e8e5df;display:block}
+.chip-face .portrait{width:30px;height:30px;background-size:300% 200%}
+
+/* Objective as Diane memo on a torn notepad */
+.quest.memo{left:24px!important;bottom:96px!important;max-width:340px!important;background:#f5f3ed!important;color:#171416;border:0!important;padding:12px 16px 14px!important;transform:rotate(-.8deg);box-shadow:0 8px 24px #0008;background-image:repeating-linear-gradient(#f5f3ed 0 21px,#cfd8e0 21px 22px)!important}
+.quest.memo:before{content:'';position:absolute;left:44%;top:-9px;width:64px;height:18px;background:#e8dcc0cc;transform:rotate(-4deg);box-shadow:0 1px 3px #0003}
+.quest.memo span{font:italic 12px Georgia!important;color:#6e101c!important;letter-spacing:0!important}
+.quest.memo p{font-size:13px;line-height:22px!important;margin-top:4px!important;color:#171416}
+.controls{left:auto!important;right:24px!important;bottom:28px!important;font-size:10px;color:#cbc1c1!important;max-width:520px;text-align:right}
+#target-prompt{bottom:auto!important;top:60%!important}
+#caption{bottom:160px!important;max-width:min(680px,90vw);white-space:normal;line-height:1.8}
+
+/* Sticker peeling off the world and flying into the book */
+.sticker-flight{position:fixed;z-index:30;pointer-events:none;transform:translate(-50%,-50%) scale(.2) rotate(-30deg);opacity:0;transition:transform .55s cubic-bezier(.2,1.6,.4,1),opacity .2s,left .7s cubic-bezier(.5,0,.3,1),top .7s cubic-bezier(.5,0,.3,1);filter:drop-shadow(0 18px 24px #000a)}
+.sticker-flight.lift{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-6deg) perspective(600px) rotateX(18deg) rotateY(-14deg)}
+.sticker-flight.fly{transform:translate(-50%,-50%) scale(.22) rotate(18deg);opacity:.2;transition:transform .7s cubic-bezier(.5,0,.3,1),opacity .7s ease-in,left .7s cubic-bezier(.5,0,.3,1),top .7s cubic-bezier(.5,0,.3,1)}
+.sticker-flight:after{content:'撕下！';position:absolute;left:50%;top:-14px;transform:translateX(-50%) rotate(-4deg);font:bold 13px 'Noto Serif SC',serif;color:#f5f3ed;background:#6e101c;padding:3px 9px;white-space:nowrap}
+.sticker-flight.fly:after{opacity:0}
+
+/* Scrapbook */
+.album-page,.board-page{margin:0 auto;padding:0 4.4vw 30px;max-width:1600px}
+.album-help{font-size:12px;line-height:2;color:#555b4d;max-width:760px;margin-top:8px}
+.album-layout{display:grid;grid-template-columns:minmax(300px,430px) 1fr;gap:36px;margin-top:24px}
+.sticker-tray{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:22px 8px;align-content:start;padding:18px;background:#211317;border-radius:6px;box-shadow:inset 0 0 0 6px #171416,inset 0 0 0 7px #8e747966;max-height:72vh;overflow:auto}
+.sticker-tray .tp-sticker-label{color:#e8dcc0!important}
+.tray-sticker{display:grid;place-items:center;padding:6px 0 22px;touch-action:none}
+.tray-sticker[data-drag]{cursor:grab}.tray-sticker.dragging{opacity:.3}
+.scrap-page{display:grid;gap:14px}
+.scrap-paper{position:relative;min-height:620px;background:#fbf8f0;background-image:linear-gradient(90deg,transparent 54px,#e0b9b9 54px 55px,transparent 55px),repeating-linear-gradient(#fbf8f0 0 31px,#d9e1e6 31px 32px);box-shadow:0 18px 50px #0003,0 0 0 1px #0001;transform:rotate(.4deg);overflow:hidden}
+.scrap-paper.over{box-shadow:0 0 0 3px #ad3544,0 18px 50px #0003}
+.scrap-date{position:absolute;left:72px;top:18px;font:11px 'Courier New';letter-spacing:2px;color:#6e101c}
+.scrap-polaroid{position:absolute;right:7%;top:9%;width:230px;background:#fff;padding:12px 12px 40px;box-shadow:0 8px 22px #0003;transform:rotate(5deg)}
+.scrap-polaroid i{display:block;height:180px;background:url('/art/portraits.png') 0 0/300% 200% no-repeat;filter:sepia(.5) contrast(1.05)}
+.scrap-polaroid span{position:absolute;left:12px;right:12px;bottom:8px;font:italic 11px/1.5 Georgia;color:#4a4036}
+.tape{position:absolute;width:90px;height:24px;background:#e8dcc0b3;box-shadow:0 1px 3px #0002}.tape.t1{right:calc(7% + 160px);top:calc(9% - 8px);transform:rotate(-24deg)}.tape.t2{right:calc(7% - 20px);top:calc(9% + 200px);transform:rotate(-30deg)}
+.scrap-empty{position:absolute;left:50%;top:60%;transform:translate(-50%,-50%) rotate(-3deg);font:italic 22px Georgia;color:#c9bfae;pointer-events:none}
+.scrap-item{position:absolute;transform:translate(-50%,-50%) rotate(var(--rot,0deg));touch-action:none;cursor:grab;padding:0}
+.scrap-item.moving{cursor:grabbing;z-index:5;filter:drop-shadow(0 18px 18px #0005)}
+.scrap-tools{display:flex;gap:14px;justify-content:flex-end;align-items:center}
+.drag-ghost{position:fixed;z-index:50;pointer-events:none;transform:translate(-50%,-50%) rotate(-6deg) scale(1.08);filter:drop-shadow(0 22px 22px #0006)}
+
+/* Sheriff board deduction */
+.board-desk{margin-top:26px;padding:36px 30px 28px;background:#2b443b;background-image:radial-gradient(#ffffff0d 1px,transparent 1px);background-size:14px 14px;border:10px solid #5b3b26;box-shadow:inset 0 0 40px #0007,0 18px 40px #0004;color:#f5f3ed}
+.board-strip{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.board-slot{position:relative;display:grid;place-items:center;gap:6px;width:170px;min-height:190px;padding:18px 8px;border-radius:8px;background:#f5f3ed12;cursor:pointer}
+.board-slot.over,.board-slot:focus-visible{background:#ad354433;outline:2px solid #ad3544}
+.board-slot em{font:italic 15px Georgia;color:#e1ac6c}
+.slot-no{position:absolute;left:10px;top:6px;font:22px Georgia;color:#f5f3ed55}
+.board-slot .tp-sticker-label{color:#e8dcc0!important}
+.board-arrow{font-style:normal;font-size:28px;color:#e1ac6c}
+.board-tray{display:flex;justify-content:center;gap:34px;margin:30px 0 8px;min-height:150px;padding-top:18px;border-top:1px dashed #f5f3ed44}
+.board-tray .tp-sticker-label{color:#e8dcc0!important;font-size:10px!important}
+.board-sticker.picked{outline:2px solid #e1ac6c;outline-offset:6px;border-radius:10px}
+#board-status{text-align:center;min-height:28px;font-size:13px;color:#ffd7d7}
+.board-desk .outline{color:#f5f3ed;border-color:#f5f3ed66}.board-desk .solid{background:#6e101c}
+.slotted{padding:0}
+
+@media(max-width:700px){
+ .place-tag{left:14px!important;top:14px!important;gap:8px}.place-badge{display:none}.place-tag strong{font-size:16px}
+ .layer-crumbs{left:10px;right:10px;bottom:12px;overflow-x:auto;gap:2px}.crumb{padding:6px 9px;font-size:11px;white-space:nowrap}.crumb small{display:none}.crumb-sep{font-size:12px}
+ .quest.memo{bottom:auto!important;top:88px;max-width:62vw!important;padding:8px 10px!important}.quest.memo p{font-size:11px}
+ .mini-people{bottom:74px!important;right:10px!important}.item-chip{font-size:11px}
+ .town-places{right:10px;left:10px;bottom:70px;display:flex;justify-content:space-between;gap:6px}.place-sticker{min-width:0;flex:1;flex-direction:column;gap:2px;padding:6px 2px}.place-sticker span{font-size:10px;text-align:center}.place-sticker small{display:none}
+ .place-tag>div{max-width:44vw;padding:7px 10px}.place-tag>div>span{font-size:7px;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .hud-nav .album-button{transform:none}.hud-nav .album-count{font-size:9px}.case-progress{right:12px!important}
+ .quest.memo{top:118px!important}
+ .controls{display:none}.case-progress{top:66px!important}
+ .album-layout{grid-template-columns:1fr}.sticker-tray{max-height:none;grid-template-columns:repeat(4,1fr)}.scrap-paper{min-height:460px}.scrap-polaroid{width:150px}.scrap-polaroid i{height:110px}
+ .board-slot{width:96px;min-height:140px}.board-arrow{display:none}.board-desk{padding:18px 10px;border-width:6px}
+}

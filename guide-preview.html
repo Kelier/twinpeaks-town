@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="data:," />
+  <title>Guide preview · 导览预览</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #0b0808; color: #eee; font: 16px system-ui, sans-serif; }
+    .bar { position: fixed; left: 12px; bottom: 12px; display: flex; gap: 8px; z-index: 1; }
+    .bar a, .bar button { color: #f6d; background: #222; border: 1px solid #444; padding: 6px 10px; border-radius: 6px; text-decoration: none; font: inherit; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <a href="?id=lynch&lang=zh">lynch · zh</a><a href="?id=lynch&lang=en">lynch · en</a>
+    <a href="?id=fwwm&lang=zh">fwwm · zh</a><a href="?id=fwwm&lang=en">fwwm · en</a>
+    <button id="open" type="button">open again</button>
+  </div>
+  <script type="module">
+    // usage: guide-preview.html?id=lynch|fwwm&lang=zh|en&page=N
+    const q = new URLSearchParams(location.search);
+    const lang = q.get('lang');
+    if (lang) { try { localStorage.setItem('tp-lang', lang); } catch { } }
+    const { openGuide } = await import('/src/game/guide.js');
+    const id = q.get('id') || 'lynch';
+    const page = +(q.get('page') || 1);
+    const open = () => {
+      window.__guideClosed = false;
+      window.__closeGuide = openGuide(id, { onClose: () => { window.__guideClosed = true; console.log('[preview] guide closed'); } });
+      if (page > 1) document.querySelector(`.gd-chip[data-i="${page - 1}"]`)?.click();
+    };
+    document.getElementById('open').addEventListener('click', open);
+    open();
+    window.__guideReady = true;
+  </script>
+</body>
+</html>
