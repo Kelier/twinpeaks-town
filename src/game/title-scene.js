@@ -5,7 +5,7 @@ import { HDRLoader } from 'three/addons/loaders/HDRLoader.js';
 export function createTitleScene(canvas, options, notify) {
   const T=(zh,en)=>options.language==='zh'?zh:en;
   let viewport={...options},renderer,model,env,frameId,disposed=false,ready=false,present=false,failed=false;
-  let yaw=.78,pitch=.58,targetYaw=.6,targetPitch=.48,lit=true,lightLevel=.12,drag=false,last=0,dirty=true,arrival=0,enterTime=0,zoom=1;
+  let yaw=.78,pitch=.58,targetYaw=.6,targetPitch=.48,lit=true,lightLevel=.12,drag=false,last=0,dirty=true,arrival=0,enterTime=0,zoom=1,fitDistance=0;
   const metrics={started:performance.now()},requests=new Set(),textures=[],fitPoints=[];
   const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(34,1,.2,90),center=new THREE.Vector3(0,1.55,0);
   const ray=new THREE.Raycaster(),pointer=new THREE.Vector2(),targets={},bakedMaterials=[];
@@ -49,10 +49,11 @@ export function createTitleScene(canvas, options, notify) {
     function pose(now,dt){
       const intro=ready&&arrival?Math.min(1,(now-arrival)/1700):0;
       yaw=reduced?targetYaw:THREE.MathUtils.damp(yaw,targetYaw+(reduced||drag?0:Math.sin(now*.00025)*.014),6,dt);pitch=reduced?targetPitch:THREE.MathUtils.damp(pitch,targetPitch,6,dt);
-      const tan=Math.tan(THREE.MathUtils.degToRad(camera.fov/2)),right=new THREE.Vector3(Math.cos(yaw),0,-Math.sin(yaw)),up=new THREE.Vector3(-Math.sin(yaw)*Math.sin(pitch),Math.cos(pitch),-Math.cos(yaw)*Math.sin(pitch)),toward=new THREE.Vector3(Math.sin(yaw)*Math.cos(pitch),Math.sin(pitch),Math.cos(yaw)*Math.cos(pitch));let distance=10;
-      for(const p of fitPoints)distance=Math.max(distance,p.dot(toward)+Math.abs(p.dot(right))/(tan*camera.aspect*.84),p.dot(toward)+Math.abs(p.dot(up))/(tan*.8));
+      const tan=Math.tan(THREE.MathUtils.degToRad(camera.fov/2)),right=new THREE.Vector3(Math.cos(yaw),0,-Math.sin(yaw)),up=new THREE.Vector3(-Math.sin(yaw)*Math.sin(pitch),Math.cos(pitch),-Math.cos(yaw)*Math.sin(pitch)),toward=new THREE.Vector3(Math.sin(yaw)*Math.cos(pitch),Math.sin(pitch),Math.cos(yaw)*Math.cos(pitch));let fitted=10;
+      for(const p of fitPoints)fitted=Math.max(fitted,p.dot(toward)+Math.abs(p.dot(right))/(tan*camera.aspect*.84),p.dot(toward)+Math.abs(p.dot(up))/(tan*.8));
+      if(!fitDistance||reduced)fitDistance=fitted;else fitDistance=THREE.MathUtils.damp(fitDistance,fitted,drag?7:2.2,dt);
       const enter=enterTime?(reduced?1:Math.min(1,(now-enterTime)/850)):0;
-      distance*=(1-.34*enter*enter)/zoom;camera.position.copy(toward.multiplyScalar(distance)).add(center);camera.lookAt(center);
+      const distance=fitDistance*(1-.34*enter*enter)/zoom;camera.position.copy(toward.multiplyScalar(distance)).add(center);camera.lookAt(center);
       lightLevel=reduced?(lit?1:0):THREE.MathUtils.damp(lightLevel,lit?(reduced?1:.15+.85*intro):0,5,dt);
       const baked=bakedMaterials.length>0;key.intensity=(baked?.18:1.4)*lightLevel+.05;fill.intensity=.12+lightLevel*(baked?.15:.32);rim.intensity=.15+lightLevel*.2;lamp.intensity=8*lightLevel;glow.material.opacity=.5*lightLevel;
       for(const m of bakedMaterials)m.lightMapIntensity=.035+lightLevel*.9;
