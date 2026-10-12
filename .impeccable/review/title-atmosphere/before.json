@@ -1,0 +1,22 @@
+{
+  "readyAt": 15029.299999982119,
+  "tasks": [
+    {
+      "start": 667.5999999940395,
+      "duration": 12322
+    },
+    {
+      "start": 12992.5,
+      "duration": 52
+    },
+    {
+      "start": 13766.5,
+      "duration": 1241
+    }
+  ],
+  "triangles": 342976,
+  "drawCalls": 126,
+  "pixelRatio": 1,
+  "shadowAutoUpdate": true,
+  "load": null
+}

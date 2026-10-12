@@ -1,0 +1,55 @@
+{
+  "readyAt": 12669.5,
+  "tasks": [
+    {
+      "start": 368.90000000596046,
+      "duration": 95
+    },
+    {
+      "start": 464.5,
+      "duration": 52
+    },
+    {
+      "start": 3927.2000000178814,
+      "duration": 1719
+    },
+    {
+      "start": 5680.0999999940395,
+      "duration": 62
+    },
+    {
+      "start": 5776.0999999940395,
+      "duration": 56
+    },
+    {
+      "start": 5924.300000011921,
+      "duration": 179
+    },
+    {
+      "start": 6235,
+      "duration": 117
+    },
+    {
+      "start": 6968.5999999940395,
+      "duration": 75
+    },
+    {
+      "start": 7055.200000017881,
+      "duration": 5492
+    },
+    {
+      "start": 12558.300000011921,
+      "duration": 70
+    }
+  ],
+  "triangles": 171490,
+  "drawCalls": 64,
+  "pixelRatio": 1,
+  "shadowAutoUpdate": false,
+  "load": {
+    "started": 5186.800000011921,
+    "downloaded": 6094.5,
+    "prepared": 7055.300000011921,
+    "firstFrame": 12545.800000011921
+  }
+}

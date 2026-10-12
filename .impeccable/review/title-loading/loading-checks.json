@@ -1,0 +1,92 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "desktop",
+      "host": {
+        "x": 552.953125,
+        "y": 106.828125,
+        "w": 1495.046875,
+        "h": 937.734375
+      },
+      "poster": {
+        "x": 552.953125,
+        "y": 106.828125,
+        "w": 1495.046875,
+        "h": 937.734375
+      },
+      "entry": {
+        "x": 143.359375,
+        "y": 587.78125,
+        "w": 237.234375,
+        "h": 49
+      },
+      "rendererAbsent": true,
+      "canvasCount": 1
+    },
+    {
+      "name": "mobile",
+      "host": {
+        "x": 0,
+        "y": 220,
+        "w": 390,
+        "h": 364
+      },
+      "poster": {
+        "x": 0,
+        "y": 220,
+        "w": 390,
+        "h": 364
+      },
+      "entry": {
+        "x": 77.21875,
+        "y": 594,
+        "w": 235.546875,
+        "h": 44
+      },
+      "rendererAbsent": true,
+      "canvasCount": 1
+    },
+    {
+      "name": "landscape",
+      "host": {
+        "x": 320.71875,
+        "y": 42,
+        "w": 523.28125,
+        "h": 300
+      },
+      "poster": {
+        "x": 320.71875,
+        "y": 42,
+        "w": 523.28125,
+        "h": 300
+      },
+      "entry": {
+        "x": 59.078125,
+        "y": 214.15625,
+        "w": 188.765625,
+        "h": 44
+      },
+      "rendererAbsent": true,
+      "canvasCount": 1
+    },
+    {
+      "compileTimeoutRecovery": true
+    },
+    {
+      "hdrTimeoutStillInteractive": true,
+      "metrics": {
+        "started": 785.6000000238419,
+        "downloaded": 1032.5,
+        "prepared": 6287.800000011921,
+        "firstFrame": 6327.600000023842,
+        "environmentFallback": true
+      }
+    },
+    {
+      "entryCreatesGameRenderer": true,
+      "titleContextDisposed": true
+    }
+  ],
+  "errors": []
+}

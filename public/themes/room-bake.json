@@ -1,0 +1,25 @@
+{
+  "source": "blender-materials/title-redroom/title-baked.blend",
+  "engine": "Cycles 4.5.10",
+  "samples": 16,
+  "bounces": 4,
+  "atlas": [
+    2048,
+    2048
+  ],
+  "uv": "TEXCOORD_0 shared atlas",
+  "maps": {
+    "light": "room-baked-light.png",
+    "ao": "room-contact-ao.png",
+    "normal": "room-surface-normal.png"
+  },
+  "normalSpace": "tangent",
+  "lightingPass": [
+    "direct",
+    "indirect"
+  ],
+  "lightColorSpace": "linear",
+  "meshes": 65,
+  "polygons": 111765,
+  "elapsedSeconds": 579.69
+}

@@ -11,8 +11,10 @@ import { ORDER, NEXT, CROSSROADS, CLUES, ENDINGS, EPISODES, newStory, endingFor,
 import { t, tx, T, LANGS, getLang, setLang, onLang } from './i18n.js';
 import { mountTitleRoom } from './title-room.js';
 import { musicControl, paintMusic, toggleMusic } from './bgm.js';
+import { roomSticker } from './room-stickers.js';
 import './game.css';
 import './theme.css';
+import './title.css';
 import { mountTouch } from './touch-controls.js';
 
 const app = document.querySelector('#app');
@@ -28,19 +30,14 @@ app.innerHTML = `
   </div>
   <section id="dialog" hidden><b class="who"></b><p class="line"></p><ol class="choices"></ol><span class="more">▼</span></section>
   <section id="title">
-    <div class="title-art"><img src="/themes/red-room-miniature.webp" alt="" fetchpriority="high" /></div>
-    <header class="title-top"><span class="wordmark">双峰 · 梦境剧场</span><button data-act="library" class="quiet-button">${T('档案与设置','Archive & settings')}</button></header>
-    <div class="title-inner">
-      <h1>双峰<span>TWIN PEAKS</span></h1>
-      <p class="title-copy">${T('有些梦，从未醒来。','Some dreams never end.')}</p>
-      <p class="loading" data-t="loading"></p>
-      <div class="menu" hidden>
-        <button data-act="new" data-t="start"></button>
-        <button data-act="continue" hidden><b data-t="continue"></b><em></em></button>
-      </div>
-<div class="title-music">${musicControl()}<p>Julee Cruise — Falling</p></div>
+    <header class="title-top"><div class="title-inner"><h1>双峰<span>TWIN PEAKS</span></h1><p class="title-copy">${T('有些梦，从未醒来。','Some dreams never end.')}</p></div></header>
+    <div class="title-art">
+      <div class="scene-guide scene-entry" data-room-anchor="entry"><button class="entry-emblem" data-act="room-entry" aria-label="${T('进入梦境','Enter the dream')}">${roomSticker('entry')}</button><div class="menu" hidden><button data-act="new" data-t="start"></button><button data-act="continue" hidden><b data-t="continue"></b><em></em></button></div><p class="loading" data-t="loading"></p></div>
+      <button data-act="library" class="scene-guide scene-archive" data-room-anchor="archive">${roomSticker('archive')}<span>${T('梦境档案','Dream archive')}</span></button>
+      <button data-act="help" class="scene-guide scene-help" data-room-anchor="help">${roomSticker('help')}<span>${T('入场须知','How to play')}</span></button>
+      <div class="scene-guide scene-music" data-room-anchor="music">${musicControl(roomSticker('music'))}<p>Julee Cruise · Falling</p></div>
     </div>
-    <footer class="title-footer"><span>${T('献给大卫·林奇','For David Lynch')}<small>1946 — 2025</small></span><button data-act="help" class="quiet-button">${T('如何游玩','How to play')}</button><span class="footer-note">${T('非官方互动致敬','An unofficial interactive tribute')}</span></footer>
+    <footer class="title-footer"><span>${T('轻触物件，或拖动红房','Touch an object, or turn the room')}</span><span class="dedication">${T('献给大卫·林奇','For David Lynch')}<small>${T('非官方互动致敬','An unofficial interactive tribute')}</small></span></footer>
   </section>
   <section id="library" hidden aria-label="${T('档案与设置','Archive and settings')}">
     <button class="panel-close quiet-button" data-act="close-library">${T('返回','Back')} <span aria-hidden="true">×</span></button>
@@ -80,8 +77,10 @@ function paintUI() {
   if (G.state === 'paused') $('#pause .program').innerHTML = program();
   paintMusic();
   $('.title-copy').textContent=T('有些梦，从未醒来。','Some dreams never end.');
-  $('[data-act=library]').textContent=T('档案与设置','Archive & settings');
-  $('[data-act=help]').textContent=T('如何游玩','How to play');
+  $('[data-act=library] span').textContent=T('梦境档案','Dream archive');
+  $('[data-act=new]').textContent=T('步入红房','Enter the Red Room');
+  $('[data-act=continue] b').textContent=T('重返梦境','Return to the dream');
+  $('[data-act=help] span').textContent=T('入场须知','How to play');
 
   document.title = getLang() === 'zh' ? '双峰 · 小小梦魇' : 'Twin Peaks · Little Nightmare';
 }
@@ -95,10 +94,15 @@ function openOverlay(kind) {
   import('./guide.js').then((m) => { overlay.close = m.openGuide(kind, { onClose: done }); }).catch((e) => { console.error(e); done(); });
 }
 try { localStorage.removeItem('tp-visual-theme'); } catch {}
-const renderer = createRenderer($('#stage'));
-renderer.domElement.id = 'velvet-stage';
+let renderer, composer, finish;
 const camera = new THREE.PerspectiveCamera(32, innerWidth / innerHeight, .1, 220);
-const { composer, finish } = createComposer(renderer, new THREE.Scene(), camera);
+function ensureGameRenderer() {
+  if (renderer) return;
+  renderer = createRenderer($('#stage'));
+  renderer.domElement.id = 'velvet-stage';
+  ({ composer, finish } = createComposer(renderer, new THREE.Scene(), camera));
+  resize();
+}
 const sound = new Sound();
 let titleRoom;
 const SAVE = 'tp-little-nightmare-v3';
@@ -242,6 +246,7 @@ function disposeScene(s) {
 }
 
 async function buildLevel(id, { title = false, restore = null } = {}) {
+  ensureGameRenderer();
   const L = LEVELS[id]; await ensureAssets(L);
   disposeScene(G.scene);
   G.id = id; G.level = L;
@@ -280,7 +285,9 @@ async function buildLevel(id, { title = false, restore = null } = {}) {
 
 async function startGame(resume) {
   if(G.state !== 'title')return;
-  titleRoom?.dispose(); sound.start(); $('#title').classList.add('gone'); G.state = 'card';
+  G.state = 'entering'; sound.start();
+  await titleRoom?.enter();
+  titleRoom?.dispose(); $('#title').classList.add('gone'); G.state = 'card';
   hud.card.hidden=false; hud.card.classList.add('on');hud.card.querySelector('small').textContent='';hud.card.querySelector('h2').textContent=t('loading');
   if (resume) { G.story = saved.story || newStory(); await buildLevel(saved.id, { restore: saved }); }
   else { G.story = newStory(); await buildLevel(ORDER[0]); }
@@ -381,6 +388,7 @@ app.addEventListener('click', (e) => {
   const c = e.target.closest('[data-choice]'); if (c && dlg.resolve) { const r = dlg.resolve; dlg.resolve = null; dlg.opts = null; r(+c.dataset.choice); return; }
   if (G.state === 'dialog' && e.target.closest('#dialog') && dlg.resolve && !dlg.opts) { if (dlg.resolve()) dlg.resolve = null; return; }
   const b = e.target.closest('button'); if (!b) return; const a = b.dataset.act;
+  if(a==='room-entry'){const resume=$('[data-act=continue]');(resume&&!resume.hidden?resume:$('[data-act=new]')).click();return;}
   if (b.dataset.act === 'bgm') { toggleMusic(); return; }
   if (a === 'library' || a === 'help') {$('#library').hidden=false;$('#help').open=a==='help';$('#library button').focus();return;}
   if(a === 'close-library') {$('#library').hidden=true;$('[data-act=library]').focus();return;}
@@ -432,12 +440,14 @@ function frame() {
   }
   pressed.clear();
   G.fade += ((G.fadeTarget ?? 1) - G.fade) * Math.min(1, (G.fadeSpeed || .05) * 60 * dt);
+  if (finish) {
   finish.uniforms.time.value = G.t; finish.uniforms.fade.value = G.fade * (1 - (G.dim || 0));
   finish.uniforms.red.value += ((G.red || 0) * .8 + G.dread * .25 - finish.uniforms.red.value) * Math.min(1, dt * 4);
   finish.uniforms.bars.value += ((G.focus ? .1 : .055) - finish.uniforms.bars.value) * Math.min(1, dt * 3);
+  }
   hud.dread.style.opacity = G.dread;
   document.documentElement.dataset.gameState = G.state;
-  if (G.state !== 'title' && G.state !== 'loading') composer.render();
+  if (composer && G.state !== 'title' && G.state !== 'loading') composer.render();
 }
 function updateCamera(dt) {
   const p = G.player.pos, L = G.level;
@@ -453,6 +463,7 @@ function updateCamera(dt) {
   camera.lookAt(cam.look.x, cam.look.y, -.6);
 }
 function resize() {
+  if (!renderer) return;
   renderer.setSize(innerWidth, innerHeight); composer.setSize(innerWidth, innerHeight);
   camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); fitArch();
   finish.uniforms.res.value.set(innerWidth, innerHeight);
@@ -465,4 +476,4 @@ function simSteps(n, inp = {}) {
   for (let i = 0; i < n; i++) { const it = { ...base, ...inp, jumpPressed: !!inp.jump && i === 0 }; G.player.update(1 / 60, it, G.world); G.world.update(1 / 60, G.t += 1 / 60, G.player); }
   return { pos: G.player.pos.toArray().map((v) => +v.toFixed(2)), ground: G.player.onGround, mode: G.player.mode, grabbed: !!G.player.grabbed };
 }
-window.__game = { get titleRoom(){return titleRoom;}, G, ctx, cam, composer, finish, renderer, camera, simSteps, dlg, buildLevel };
+window.__game = { get titleRoom(){return titleRoom;}, G, ctx, cam, get composer(){return composer;}, get finish(){return finish;}, get renderer(){return renderer;}, camera, simSteps, dlg, buildLevel };

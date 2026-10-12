@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "checks": [
+    "failed GLB keeps poster, retry and entry",
+    "archive and help reachable",
+    "music defaults off",
+    "entry during HDR loading disposes title context"
+  ],
+  "errors": []
+}

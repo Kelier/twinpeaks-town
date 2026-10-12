@@ -1,0 +1,769 @@
+[
+  {
+    "case": "normal arrival",
+    "samples": [
+      {
+        "time": 3308.400000035763,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 3408.2000000476837,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 3510.400000035763,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 3608.2000000476837,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 3708.300000011921,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 3808.300000011921,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 3908.300000011921,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 4010.2000000476837,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 4110.200000047684,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 4208.300000011921,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 4308.300000011921,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 4408.300000011921,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 4510.100000023842,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 4608.300000011921,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 4708.200000047684,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 4808.300000011921,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 4908.300000011921,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 5014.700000047684,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 5108.300000011921,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 5208.300000011921,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 5308.300000011921,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 5408.300000011921,
+        "present": false,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 5508.600000023842,
+        "present": true,
+        "ready": false,
+        "yaw": 0.6,
+        "light": 1
+      },
+      {
+        "time": 5614.900000035763,
+        "present": true,
+        "ready": false,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 5708.300000011921,
+        "present": true,
+        "ready": false,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 5811.100000023842,
+        "present": true,
+        "ready": false,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 5908.200000047684,
+        "present": true,
+        "ready": false,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 6013.100000023842,
+        "present": true,
+        "ready": false,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 6110.300000011921,
+        "present": true,
+        "ready": false,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 6213.700000047684,
+        "present": true,
+        "ready": false,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 6310.300000011921,
+        "present": true,
+        "ready": false,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 6422.700000047684,
+        "present": true,
+        "ready": false,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 6510.400000035763,
+        "present": true,
+        "ready": false,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 6612.5,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 6712.200000047684,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 6810.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 6908.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 7008.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 7108.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 7208.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 7310.700000047684,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 7408.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 7508.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 7608.200000047684,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 7708.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 7808.200000047684,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 7908.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 8008.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 8108.200000047684,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 8213.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 8308.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 8410,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 8510,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 8612.200000047684,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 8708.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 8808.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 8908.5,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 9018.800000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 9110,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 9208.400000035763,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 9310,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 9410,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 9508.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 9608.400000035763,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 9710.100000023842,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 9810.100000023842,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 9910,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 10008.200000047684,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 10109.900000035763,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 10214.700000047684,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 10309.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 10420.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 10523.400000035763,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 10609.900000035763,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 10709.900000035763,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 10808.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 10908.900000035763,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 11010.700000047684,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6285100162182211,
+        "light": 0.14478678169648662
+      },
+      {
+        "time": 11130.700000047684,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 11208.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 11308.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 11408.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 11508.400000035763,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 11613,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 11708.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 11808.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 11908.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 12009.800000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 12108.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 12208.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 12308.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 12408.200000047684,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 12508.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 12608.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 12709.800000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 12808.200000047684,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 12908.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 13008.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 13108.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 13208.300000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 13309.800000011921,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 13409.900000035763,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 13508.700000047684,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      },
+      {
+        "time": 13608.5,
+        "present": true,
+        "ready": true,
+        "yaw": 0.6135505254148561,
+        "light": 0.8324448952399455
+      }
+    ]
+  },
+  {
+    "case": "normal entry transition",
+    "entering": {
+      "state": "entering",
+      "entering": true,
+      "opacity": "1"
+    },
+    "disposalAfterMs": 11614
+  },
+  {
+    "case": "saved portrait choices and following hint",
+    "resume": {
+      "x": 158.78125,
+      "y": 473.890625,
+      "w": 97.453125,
+      "h": 47.6875
+    },
+    "new": {
+      "x": 174.703125,
+      "y": 521.578125,
+      "w": 65.609375,
+      "h": 44
+    },
+    "hint": {
+      "x": 121.3828125,
+      "y": 579.734375,
+      "w": 147.234375,
+      "h": 15
+    },
+    "chapter": "双 R 餐馆 · 打烊之后"
+  },
+  {
+    "case": "failed GLB leaves navigation usable; retry restores actual geometry"
+  }
+]

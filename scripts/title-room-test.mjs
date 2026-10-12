@@ -4,13 +4,13 @@ const b=await puppeteer.launch({executablePath:'/usr/local/bin/chromium',headles
 try{
  await p.evaluateOnNewDocument(()=>localStorage.setItem('tp-lang','zh'));
  for(const [name,width,height] of [['desktop',1440,900],['mobile',390,844],['landscape',844,390]]){
-  await p.setViewport({width,height,isMobile:name!=='desktop',hasTouch:name!=='desktop'});await p.goto('http://localhost:5191/',{waitUntil:'networkidle0'});await p.waitForFunction(()=>window.__game?.titleRoom?.ready,{timeout:120000});await p.evaluate(async()=>{await document.fonts.ready;document.getAnimations().forEach(a=>a.finish());});
+  await p.setViewport({width,height,isMobile:name!=='desktop',hasTouch:name!=='desktop'});await p.goto('http://localhost:5191/',{waitUntil:'networkidle0'});await p.waitForFunction(()=>window.__game?.titleRoom?.ready && window.__game.titleRoom.snapshot.lampPoint,{timeout:120000});await p.evaluate(async()=>{await document.fonts.ready;document.getAnimations().forEach(a=>a.finish());});
   await p.screenshot({path:`${out}/${name}-on.png`});
-  assert.ok(await p.evaluate(()=>window.__game.titleRoom.model.children.length>0));
+  assert.ok(await p.evaluate(()=>window.__game.titleRoom.snapshot.render.triangles>0));
   await p.click('.room-light');await p.waitForFunction(()=>window.__game.titleRoom.lightLevel<.1,{timeout:60000});assert.equal(await p.evaluate(()=>window.__game.titleRoom.lit),false);
   await p.screenshot({path:`${out}/${name}-off.png`});
   // Hit the lamp via its projected mesh centre, not the UI fallback switch.
-  const lamp=await p.evaluate(async()=>{const THREE=await import('/node_modules/three/build/three.module.js');const room=window.__game.titleRoom;const mesh=room.lampMeshes.find(m=>m.name.toLowerCase().includes('shade'));const q=new THREE.Vector3();mesh.getWorldPosition(q);const box=new THREE.Box3().setFromObject(mesh);box.getCenter(q);q.project(room.camera);const r=room.renderer.domElement.getBoundingClientRect();return{x:r.x+(q.x+1)*r.width/2,y:r.y+(1-q.y)*r.height/2};});
+  const lamp=await p.evaluate(()=>{const point=window.__game.titleRoom.snapshot.lampPoint,r=document.querySelector('.room-canvas').getBoundingClientRect();return{x:r.x+(point.x+1)*r.width/2,y:r.y+(1-point.y)*r.height/2};});
   if(name==='desktop')await p.mouse.click(lamp.x,lamp.y);else await p.touchscreen.tap(lamp.x,lamp.y);
   await p.waitForFunction(()=>window.__game.titleRoom.lit,{timeout:10000});
   const rect=await (await p.$('.room-canvas')).boundingBox();const before=await p.evaluate(()=>window.__game.titleRoom.yaw);

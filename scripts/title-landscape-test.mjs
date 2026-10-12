@@ -1,0 +1,15 @@
+import puppeteer from 'puppeteer-core';import assert from 'node:assert/strict';import fs from 'node:fs/promises';
+const out='.impeccable/review/title-landscape';const checks=[];
+const b=await puppeteer.launch({executablePath:'/usr/local/bin/chromium',headless:true,protocolTimeout:120000,args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+try{for(const [name,width,height] of [['desktop',1440,900],['user-2048',2048,1013],['mobile',390,844],['landscape',844,390]]){
+ const p=await b.newPage();p.setDefaultTimeout(45000);const touch=name==='mobile'||name==='landscape';await p.setViewport({width,height,deviceScaleFactor:1,isMobile:touch,hasTouch:touch});const click=selector=>touch?p.tap(selector):p.click(selector);await p.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'reduce'}]);await p.evaluateOnNewDocument(()=>localStorage.setItem('tp-lang','zh'));const errors=[];p.on('pageerror',e=>errors.push(e.message));
+ await p.goto('http://localhost:5191/',{waitUntil:'domcontentloaded'});assert.equal(await p.$eval('#title',el=>el.querySelectorAll('img').length),0);
+ await p.waitForFunction(()=>window.__game?.titleRoom?.ready);await p.waitForFunction(()=>window.__game.titleRoom.lightLevel>.98&&window.__game.titleRoom.snapshot.render?.triangles>100000);await new Promise(r=>setTimeout(r,500));
+ const state=await p.evaluate(()=>{const room=window.__game.titleRoom;return{snapshot:room.snapshot,scroll:document.documentElement.scrollWidth>innerWidth,anchors:[...document.querySelectorAll('#title [data-room-anchor]')].map(el=>{const r=el.getBoundingClientRect();return{name:el.dataset.roomAnchor,x:r.x,y:r.y,w:r.width,h:r.height};})};});assert.equal(state.scroll,false);assert(state.snapshot.present);assert(state.snapshot.render.triangles>100000);for(const a of state.anchors){assert(a.x>=-1&&a.x+a.w<=width+1,`${name}/${a.name} horizontal`);assert(a.y>=0&&a.y+a.h<=height,`${name}/${a.name} vertical`);}
+ await p.screenshot({fromSurface:false,path:`${out}/${name}.png`});
+ await click('[data-act=help]');assert.equal(await p.$eval('#help',e=>e.open),true);await click('[data-act=close-library]');await click('[data-act=library]');assert.equal(await p.$eval('#library',e=>e.hidden),false);await click('[data-act=close-library]');
+ await click('.room-light');await p.waitForFunction(()=>window.__game.titleRoom.lightLevel<.03);if(name==='desktop'||name==='mobile')await p.screenshot({fromSurface:false,path:`${out}/${name}-dark.png`});await click('.room-light');await p.waitForFunction(()=>window.__game.titleRoom.lightLevel>.98);
+ await p.focus('.room-canvas');await p.keyboard.press('ArrowRight');await p.waitForFunction(()=>window.__game.titleRoom.yaw>.7);
+ assert.equal(await p.$eval('#title [data-act=bgm]',e=>e.getAttribute('aria-pressed')),'true');
+ checks.push({name,width,height,touch,errors,...state});assert.deepEqual(errors,[]);await p.close();console.log(name,'passed');
+}await fs.writeFile(`${out}/checks.json`,JSON.stringify(checks,null,2));}finally{await b.close();}

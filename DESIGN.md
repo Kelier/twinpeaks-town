@@ -5,11 +5,20 @@ colors:
   surround: "#090b0c"
   paper: "#e8dcc6"
   dim: "#baaa94"
-  title-text: "#ecdfc8"
-  action-text: "#e5d7be"
+  title-text: "#eedcc0"
+  title-glow: "#27141a"
+  title-shadow: "#110c10"
+  title-copy: "#cdb298"
+  title-subtitle: "#cba47c"
+  title-gold: "#dfba8b"
+  title-nav: "#ead6b8"
+  title-music: "#dfc6a6"
+  title-credit: "#c5a582"
+  title-light: "#ead6b8"
+  action-text: "#ecd4af"
   action-rule: "#947753"
-  quiet-text: "#d2bfa8"
-  archive-entry-text: "#eedcc6"
+  quiet-text: "#dbc6ac"
+  archive-entry-text: "#dbc6ac"
   archive-rule: "#6c5643"
   focus: "#ebc998"
   archive: "#211017"
@@ -18,65 +27,146 @@ colors:
   touch-background: "#1c141bbd"
   touch-text: "#e9d5b7"
   touch-held: "#76333ee6"
-  room-light-background: "#151113d9"
-  room-light-off-background: "#0e1118e8"
-  room-light-off-text: "#c8bba7"
-  room-light-border: "#897259"
+  room-light-off-text: "#cbb9a6"
+  title-surround: "#08090a"
+  threshold-ink: "#100c10"
+  caption-edge: "#100c10cc"
+  caption-field: "#100c10ee"
+  title-entry: "#f2dfbf"
+  title-hint: "#cbb298"
+  title-focus: "#b69c77"
+  title-hover: "#fff2d4"
+  title-leader: "#c9a77b"
+  title-leader-dot: "#dfc198"
+  title-footer: "#b89b80"
+  title-dedication: "#a88d77"
+  title-retry-bg: "#1b1117"
+  title-retry-border: "#967456"
 typography:
   display:
     fontFamily: "'TV Serif', Georgia, 'Noto Serif SC', 'Songti SC', serif"
-    fontSize: "clamp(68px, 6vw, 96px)"
+    fontSize: "38px"
     fontWeight: 400
-    lineHeight: 1.2
-    letterSpacing: ".16em"
+    lineHeight: 1.1
+    letterSpacing: ".12em"
   title-copy:
     fontFamily: "'TV Serif', Georgia, 'Noto Serif SC', 'Songti SC', serif"
-    fontSize: "14px"
+    fontSize: "11px"
     lineHeight: 1.7
-    letterSpacing: ".18em"
+    letterSpacing: ".08em"
   subtitle:
     fontFamily: "'TV Serif', Georgia, 'Noto Serif SC', 'Songti SC', serif"
     fontSize: "clamp(16px, 1.4vw, 21px)"
     lineHeight: 1.7
     letterSpacing: ".04em"
   wordmark:
+    fontFamily: "Georgia, serif"
+    fontSize: "9px"
+    lineHeight: 1.5
+    letterSpacing: ".24em"
+  title-portrait:
+    fontFamily: "'TV Serif', Georgia, 'Noto Serif SC', 'Songti SC', serif"
+    fontSize: "34px"
+    lineHeight: 1.1
+    letterSpacing: ".12em"
+  title-landscape:
+    fontFamily: "'TV Serif', Georgia, 'Noto Serif SC', 'Songti SC', serif"
+    fontSize: "24px"
+    lineHeight: 1.1
+    letterSpacing: ".12em"
+  scene-entry:
+    fontFamily: "'TV Serif', Georgia, 'Noto Serif SC', 'Songti SC', serif"
+    fontSize: "18px"
+    lineHeight: 1.5
+    letterSpacing: ".08em"
+  scene-entry-portrait:
+    fontFamily: "'TV Serif', Georgia, 'Noto Serif SC', 'Songti SC', serif"
+    fontSize: "17px"
+    lineHeight: 1.5
+    letterSpacing: ".08em"
+  scene-entry-landscape:
+    fontFamily: "'TV Serif', Georgia, 'Noto Serif SC', 'Songti SC', serif"
+    fontSize: "15px"
+    lineHeight: 1.5
+    letterSpacing: ".08em"
+  scene-guide:
+    fontFamily: "'TV Serif', Georgia, 'Noto Serif SC', 'Songti SC', serif"
+    fontSize: "14px"
+    lineHeight: 1.5
+    letterSpacing: ".04em"
+  scene-guide-compact:
     fontFamily: "'TV Serif', Georgia, 'Noto Serif SC', 'Songti SC', serif"
     fontSize: "12px"
-    letterSpacing: ".18em"
+    lineHeight: 1.5
+    letterSpacing: ".04em"
+  scene-music:
+    fontFamily: "'TV Serif', Georgia, 'Noto Serif SC', 'Songti SC', serif"
+    fontSize: "13px"
+    lineHeight: 1.5
+    letterSpacing: ".02em"
+  title-hint:
+    fontFamily: "'TV Serif', Georgia, 'Noto Serif SC', 'Songti SC', serif"
+    fontSize: "10px"
+    lineHeight: 1.5
+    letterSpacing: ".06em"
+  title-credit:
+    fontFamily: "Georgia, serif"
+    fontSize: "9px"
+    lineHeight: 1.4
+    letterSpacing: ".02em"
+  title-subtitle-portrait:
+    fontFamily: "Georgia, serif"
+    fontSize: "8px"
+    lineHeight: 1.5
+    letterSpacing: ".24em"
+  title-subtitle-landscape:
+    fontFamily: "Georgia, serif"
+    fontSize: "7px"
+    lineHeight: 1.5
+    letterSpacing: ".24em"
 rounded:
   round-control: "50%"
   hold-control: "28px"
   music-track: "20px"
-  room-light: "24px"
+  room-light: "0"
 spacing:
-  title-gutter: "7vw"
-  header-gutter: "4vw"
-  portrait-gutter: "28px"
+  title-gutter: "36px"
+  header-gutter: "36px"
+  portrait-gutter: "24px"
   touch-grid-gap: "4px"
+  title-header-gap: "24px"
+  title-wordmark-gap: "18px"
+  title-portrait-copy-gap: "12px"
+  title-portrait-subtitle-gap: "8px"
+  scene-guide-padding: "10px 12px"
 components:
   button-primary:
     backgroundColor: "transparent"
     textColor: "{colors.action-text}"
-    padding: "13px 32px 13px 0"
+    padding: "8px 0 8px 24px"
   button-quiet:
     backgroundColor: "transparent"
     textColor: "{colors.quiet-text}"
-    padding: "12px 0"
+    padding: "10px 0"
   archive-entry:
     backgroundColor: "transparent"
     textColor: "{colors.archive-entry-text}"
-    padding: "12px 0"
+    padding: "10px 0"
   music-toggle:
     backgroundColor: "transparent"
     textColor: "{colors.music-text}"
     padding: "8px 0"
+  title-music-toggle:
+    backgroundColor: "transparent"
+    textColor: "{colors.title-music}"
+    padding: "0"
   room-light:
-    backgroundColor: "{colors.room-light-background}"
-    textColor: "{colors.paper}"
+    backgroundColor: "transparent"
+    textColor: "{colors.title-light}"
     rounded: "{rounded.room-light}"
-    padding: "8px 14px"
+    padding: "4px 8px"
   room-light-off:
-    backgroundColor: "{colors.room-light-off-background}"
+    backgroundColor: "transparent"
     textColor: "{colors.room-light-off-text}"
   touch-button:
     backgroundColor: "{colors.touch-background}"
@@ -86,6 +176,30 @@ components:
   touch-hold:
     rounded: "{rounded.hold-control}"
     padding: "10px 16px"
+  scene-entry:
+    backgroundColor: "linear-gradient(90deg,#100c10cc,#100c10ee 25%,#100c10ee 75%,#100c10cc)"
+    textColor: "{colors.title-entry}"
+    typography: "{typography.scene-entry}"
+    rounded: "0"
+    padding: "4px 12px"
+  scene-archive:
+    backgroundColor: "linear-gradient(90deg,#100c10cc,#100c10ee 25%,#100c10ee 75%,#100c10cc)"
+    textColor: "{colors.title-entry}"
+    padding: "10px 12px"
+    rounded: "0"
+  scene-help:
+    backgroundColor: "transparent"
+    textColor: "{colors.title-nav}"
+    padding: "10px 12px"
+  scene-music:
+    backgroundColor: "transparent"
+    textColor: "{colors.title-music}"
+    padding: "0 8px"
+  scene-light:
+    backgroundColor: "transparent"
+    textColor: "{colors.title-light}"
+    padding: "8px 10px"
+    rounded: "0"
 ---
 
 # Design System: 双峰 · 小小梦魇
@@ -94,49 +208,62 @@ components:
 
 **Creative North Star: "An empty miniature Red Room"**
 
-Near-black space surrounds a complete theatrical miniature: burgundy velvet, black leather chair, Saturn lamp, silver torchiere and ivory chevron floor. The absence of a person is the focus. Warm serif lettering and restrained brass action lines occupy the space beside the room; archive and help stay secondary.
+Near-black space surrounds a compact centered theatrical miniature: burgundy velvet, black leather chair, Saturn lamp, silver torchiere and ivory chevron floor. Warm serif lettering stays at its upper edge. The miniature itself guides navigation: chair for entry, closed folio for archive, Saturn for music, torchiere for lighting and paper programme for help. Glowing projected dots and cut-paper emblems (mountains, owl, cherries, coffee and Saturn) connect these real objects to accessible, compact DOM actions.
 
-The title loads the actual Blender-exported room model in a separate Three.js viewer. Gentle camera motion gives it life; dragging or keyboard rotation changes the view, and the floor lamp changes real scene lighting. Entering disposes the title viewer and opens the existing eleven-act Three.js game. There is one dark-red theatre interpretation: no paper renderer or visual theme switch remains. Background music is a separate explicit choice, off on every visit.
+Actual geometry arrives from darkness, its camera settles and baked illumination emerges. A dedicated OffscreenCanvas worker renders the Blender room while DOM navigation remains responsive. Entering follows a short camera dolly and fade into the existing eleven-act game. Falling begins enabled on every visit; browser-blocked playback waits for the first gesture and remains independent of environmental effects.
 
-This document covers `index.html` → `src/game/main.js`: the title under `.impeccable/red-room-title-brief.md` and the eleven playable acts under `.impeccable/game-immersion-brief.md`. Gameplay refinement extends the same miniature puppet theatre through coherent support, materials and light; it does not replace the title design. `src/game/immersion.js` owns the shared gameplay treatment, `gfx.js` the rendering and procedural texture kit, and `levels.js`, `levels2.js`, `levels3.js`, `player.js` and `world.js` the authored stages, characters and physical support. `docs/immersion-audit.md` records the implementation scope; this design document does not establish test results or review disposition. It does not replace the retained `tv.html` screening-room experience, whose own pine/amber interface remains in `src/ui/tv.css`, `src/tvMain.js` and `src/miniatureStage.js`.
+This system covers the title under `.impeccable/title-atmosphere-brief.md` and the existing gameplay under `.impeccable/game-immersion-brief.md`. Gameplay retains its shared treatment in `src/game/immersion.js`, rendering/textures in `gfx.js` and authored stage/support in level, player and world modules. `docs/immersion-audit.md` records gameplay implementation scope. `PRODUCT.md` describes the separate retained `tv.html` screening experience and is not current title acceptance criteria. Design documentation establishes visual guidance, not test success or whole-game approval.
 
 **Key Characteristics:**
 
-- A complete interactive miniature silhouette on a quiet black surround.
-- A clear continue/new-game hierarchy outside the artwork.
-- One live 3D game, with keyboard and translucent touch controls.
-- Grounded puppets and movable props, tactile materials and distinct chapter lighting.
-- Explicit music state, independent from environmental effects.
+- A compact centered miniature that acts as navigation.
+- Accessible labels connected to actual raycast objects.
+- Geometry-first arrival, baked light and a short entry dolly.
+- One live 3D game with keyboard and translucent touch controls.
+- Grounded gameplay props, tactile materials and distinct chapter lighting.
+- Explicit music state independent from environmental effects.
 
 ## Colors
 
-The interface pairs warm ivory type with a near-black surround and restrained brass rules. Burgundy lives principally in the room's velvet and game imagery, plus selected music and held-touch states. The title's archive entry is transparent with a thin underline; the archive panel itself is opaque burgundy.
+The title uses an oxblood-to-black surround, warm ivory captions and amber object leaders. `title-glow`, `title-shadow` and `title-surround` belong to the title; gameplay retains `surround`, `paper`, `dim` and its existing controls. The closely related title shades are intentional atmosphere and hierarchy, not accidental palette drift. `caption-edge` and `caption-field` provide quiet near-black rectangular backing under entry and archive over the chevrons. Help, music and light remain transparent.
 
-Tokens record the effective CSS cascade, not superseded declarations earlier in `theme.css`. Text and focus outlines remain distinct from the richly shaded scene. Music uses explicit on/off text and `aria-pressed`, so its state is not conveyed by red alone.
+**The Object Caption Rule.** Keep text readable against the actual room in both lighting states; entry/archive backing must remain quiet and attached to their object leaders.
 
-Gameplay retains its authored chapter light colors and material palette. Shared environment reflections stay restrained: interiors use intensity `.18`, shore and forest `.045`. These are Three.js scene settings, not new interface color tokens. Existing procedural color textures encode their painted colors in sRGB; material roughness and bump add surface detail without replacing the authored base colors.
+`src/game/title.css` follows `theme.css` and owns scoped title values. Existing `button-primary`, `button-quiet`, archive and music primitives remain available to gameplay/panels; `scene-*` variants describe the effective title cascade. Focus and explicit on/off text supplement color. Gameplay preserves its authored palette, sRGB base textures and restrained reflections: interior intensity `.18`, shore/forest `.045`. Those are scene settings, not new CSS color tokens.
 
 ## Typography
 
-The game uses the self-hosted `TV Serif` with Georgia, Noto Serif SC, Songti SC and generic serif fallbacks. `public/fonts/tv-serif.ttf` is the existing Noto Serif SC subset; its source/license record is `docs/tv-cut/font-source.txt`. It is not complete CJK coverage and new characters may use system fallbacks.
+The game uses the self-hosted `TV Serif` with Georgia, Noto Serif SC, Songti SC and generic serif fallbacks. `public/fonts/tv-serif.ttf` is the existing licensed Noto Serif SC subset; provenance is in `docs/tv-cut/font-source.txt`. New uncovered characters may use system fallbacks.
 
-The regular-weight Chinese title is widely spaced and shadow-free. On portrait mobile it becomes 52px with `.15em` tracking and the small English title sits beside it. Short landscape also uses a 52px title but hides the English subtitle. Portrait title copy is 12px; gameplay subtitles are 16px with 1.7 line height on the mobile layout. Track credit uses 10px Georgia, reduced to 9px in short landscape. Those credit/footer sizes are not appropriate for primary reading content.
+The title heading is regular weight, shadow-free and deliberately modest: desktop 38px, portrait 34px, short landscape 24px. English wordmark uses Georgia at 9/8/7px respectively, with `.24em` tracking. Copy is 11/10/9px; entry is 18/17/15px. Guides are 14px desktop and 12px compact; music is 13/12/11px. Hint is 10px, reduced to 8px in short landscape; track credit is 9px desktop and 8px portrait, hidden in short landscape. Footer uses 9px desktop and 8px compact. Secondary saved/new labels use 11/10/9px; chapter detail 9px desktop, 8px portrait and hidden in short landscape. These small credit and metadata steps are intentional, not primary reading sizes. Gameplay subtitles retain 16px mobile type and 1.7 line height.
+
+**The Quiet Heading Rule.** The title identifies the room; it must not reintroduce a large separated hero column.
 
 ## Layout
 
-The stage fills the viewport. Desktop title content occupies a 32% column, capped at 440px and offset by 7vw. The miniature container begins at 29% of viewport width; the live camera fits the room to its aspect ratio, while the loading/error poster uses `object-fit: contain`; the entry action is at most 320px wide. Header controls use 4vw gutters. Artwork and interface are separate, with no text laid across the chair or floor.
+The title occupies `100dvh` with a 460px minimum height. Desktop header and miniature share a centered 1060px maximum width. Header begins at 24px with 36px gutters; heading/copy form a compact horizontal line. The scene host is inset 74px above and 58px below. Footer sits at 17px with 36px gutters. Object guides track projected mesh anchors and stay within the host with 10px edge protection; their hit areas retain a 44px minimum height.
 
-At maximum 760px in portrait, the miniature sits above the title in a region `clamp(250px, 43dvh, 390px)` tall, starting below the header. The title and actions use 28px gutters; the music switch and track credit share a compact row. The title may scroll on short screens. In landscape at maximum 520px height, the title stays left at 34% width and the artwork begins at 38%; the live viewer is inset by 48px above and below, while the fallback poster retains `max-height: calc(100dvh - 30px)`. Desktop viewers above 760px width and 520px height have 60px top and 64px bottom insets. A short interaction hint and a light button sit within the artwork area, with compact placements on portrait and landscape screens.
+Portrait at width ≤760px forms one title → room/navigation → hint group. Header top is `max(28px, (100dvh - 610px)/2)` with 24px gutters. Scene top is `max(108px, (100dvh - 610px)/2 + 80px)` and height `min(106vw, 440px)`; minimum page height is 560px. The helper follows the greater of the projected geometry bottom or entry-caption bottom, plus 14px. This keeps the group compact as camera framing changes. Footer stays separate at 18px and hides its secondary dedication line.
 
-Coarse pointers or widths up to 760px expose touch controls during play. Their direction pad uses 44px cells and 4px gaps, while the action cluster has 7px gaps. Safe-area insets protect the edges. Subtitles sit above controls; dialogue is capped at 55dvh and can scroll. At 380px, touch gutters tighten to 10px. Browser-emulated viewport checks do not establish physical-phone compatibility or performance across mobile GPUs.
+Landscape at height ≤520px uses an 800px centered width, 10px header top, 32px gutters, scene insets 42px/36px and a 320px minimum title height. Chapter detail and track credit are hidden; guide hit areas remain 44px. Camera fit projects all eight room bounds corners onto current camera axes to retain the complete miniature and plinth under bounded rotation. Wheel zoom is bounded, not an unrestricted inspection camera.
+
+Coarse pointers or widths up to 760px expose gameplay touch controls. Directions use 44px cells and 4px gaps; actions use 7px gaps. Safe-area insets protect edges, subtitles sit above controls, dialogue scrolls within 55dvh, and 380px layouts tighten gutters to 10px. Touch emulation does not establish physical-phone GPU performance.
 
 ## Elevation & Depth
 
-The title viewer in `src/game/title-room.js` loads `public/themes/red-room-interactive.glb`, exported from the editable `blender-materials/title-redroom/title-redroom.blend` by `export_title.py`. The title now renders real geometry, soft shadows, environment reflections, lamp emission and changing light intensities in Three.js. AgX tone mapping and runtime materials interpret the Blender source; they do not reproduce every Cycles detail.
+Actual shared-atlas geometry owns title depth. The 65-mesh full room has 223,144 triangles; its same-room opening LOD has 35,537. `public/themes/red-room-opening.glb` appears first, followed by `red-room-baked.glb` with three 2048px light/AO/tangent-normal atlases. Blender 4.5.10 Cycles bakes direct and indirect diffuse illumination at 16 samples and four bounces, contact AO and portable surface normals. Editable source is `blender-materials/title-redroom/title-baked.blend` with `bake_title.py`; `public/themes/room-bake.json` records settings. The opening/full swap preserves camera and object-action state.
 
-`public/themes/red-room-miniature.webp` remains only the loading/error fallback, derived from the original offline Cycles render through `render_title.py`. Its CSS brightness, saturation, shadow and entrance animation apply to that poster, not the live canvas. Preserve its provenance record when exporting the fallback.
+`title-room.js` owns DOM, sizing and input; `title-worker.js` runs `title-scene.js` for parsing, compilation, uploads and WebGL drawing. No raster placeholder is used during loading or failure. Before geometry arrives, DOM entry/archive/help/music remain usable. Failure shows an honest status and fresh-worker retry, preserving page and saves. Requests for GLB/textures have 20s deadlines; optional precomputed cubeUV HDR has 4s and completes or falls back before full quality compilation. Compilation is isolated in the worker; the independent main-thread 30s watchdog bounds stuck preparation. The former 8s compile claim is obsolete.
 
-The viewer has restrained sinusoidal idle yaw and pointer-follow motion, plus bounded user rotation. Camera and light changes are damped at rate 7. Reduced-motion disables automatic idle/pointer motion, the poster entrance and canvas crossfade, while explicit rotation and light interaction remain available with damping. Rendering skips hidden tabs and is scheduled at up to 30fps, with pixel ratio capped at 1.5; this is not a measured device frame-rate guarantee. Gameplay entry disposes the viewer, model resources and its separate WebGL context. Live gameplay continues in the existing renderer with chapter models, lighting and postprocessing.
+AgX exposure is `.95`, camera near/far `.2 / 90`. Baked illumination and AO replace title runtime shadow maps. Light-map intensity varies `.035 + lightLevel * .9`, AO is `.72` and chair/velvet normals use `.55` scale. A local additive lamp sprite and real scene light intensities follow the light switch. Optional reflections and runtime shading interpret the Cycles source; they do not guarantee identical appearance or finished material quality at every magnification.
+
+Hardware rendering is capped at 2,400,000 pixels with DPR at most 1.75 desktop / 1.5 coarse pointer. Detected software renderers start at 420,000 pixels; slow normal-motion frames reduce the budget toward that minimum. Rendering schedules up to 30fps and skips hidden tabs; reduced-motion settled views skip unchanged frames. These are settings rather than measured device throughput.
+
+Arrival uses a 1.7s light emergence and damped camera settle; canvas opacity reveals over `.8s`. Idle yaw is `sin(time * .00025) * .014` radians; camera damping is 6 and light damping 5. Entry takes 850ms, reduces camera distance by up to 34%, fades guides over `.4s` and title over `.85s cubic-bezier(.22,1,.36,1)`, then disposes the worker/canvas. Reduced motion settles camera/light immediately and enters without the delay; explicit input remains available. Game renderer/composer allocate on entry.
+
+**The Geometry First Rule.** Loading and recovery never substitute a rendered room image for the interactive miniature.
+
+**The Honest Depth Rule.** Baked light, AO and surface normals support actual geometry; retain editable bake source and state measured limits separately from visual intent.
 
 Gameplay uses soft shadow maps plus support-aware contact patches beneath the player, registered cast members and movable props. Each patch follows the highest eligible solid collider below the subject, sits `.008` world units above that surface, expands and fades with height, and disappears when there is no support or the gap reaches 3 world units. These are soft planar contact approximations, not screen-space ambient occlusion or ray-traced shadows; they do not fix mismatched mesh/collider geometry by themselves. Shared shadow calibration uses depth bias `−.00008` and normal bias `.008` world units.
 
@@ -148,29 +275,33 @@ Touch controls retain a small `0 3px 10px #0003` shadow. Existing subtitle shado
 
 ## Shapes
 
-The title's fine rules and square-edged text actions leave the miniature dominant. The drawn arrow ends the leading action. Gameplay movement and pause controls are circular translucent surfaces; use/hold is a wider 28px-radius capsule. The music indicator uses a small rounded track and circular thumb. Chevron flooring and vertical curtain folds belong to the room, not every text panel.
+Entry uses a square-edged near-black caption field. All five object guides carry ivory cut-paper vector emblems, compact serif labels, faint amber leaders and glowing endpoint dots. Emblems are 38px desktop / 32px mobile inside at least 44px actions. The owl archive and cherry help marks are vertically separated; reduced motion stops the 3.5s beacon pulse. The scene itself supplies the chevrons and curtain folds. Gameplay movement/pause controls remain circular translucent surfaces; use/hold retains its wider 28px capsule and music its rounded track/thumb.
 
 ## Components
 
+### Scene stickers
+
+Mountain peaks mark entry, an owl marks archives, cherries mark instructions, coffee marks Falling, and Saturn marks the lamp. Labels name the action rather than requiring symbol knowledge. Hover/focus tips the emblem slightly and brings up warm glow; keyboard focus remains visible. The entry emblem continues a saved game or starts a new one.
+
 ### Start and continue
 
-The leading action has a brass bottom rule, arrow and minimum 48px height on desktop. Continue moves first when a save exists and displays its chapter; new game becomes secondary. Short landscape actions have a 44px minimum height. Both lead into the same live 3D game and existing save system.
+The chair is the entry target. Projected DOM captions provide immediate keyboard/touch alternatives; the primary action is 44px high inside the quiet caption field. A save puts Return to the dream first with chapter detail; new game becomes secondary. Both open the same existing game/save system. Actual chair raycast invokes the current primary action. Entry follows the camera dolly/fade and disposes the title viewer.
 
 ### Interactive miniature
 
-Drag with mouse or touch to rotate within a bounded corner view; pointer capture supports the drag. When the canvas is focused, arrow keys rotate, **L** toggles lights and **Home** resets the view. Yaw targets are limited to −.05…1.18 radians and pitch to .22….85 radians. The canvas has an accessible instruction label, visible focus outline and grab/grabbing cursors. Interaction does not start gameplay.
+Drag with mouse or touch to turn the same real geometry, using pointer capture; wheel zoom is bounded. Focused canvas arrow keys rotate, **L** changes lighting and **Home** resets. Accessible labels, visible focus and grab/grabbing states accompany the canvas. Short taps raycast chair, closed folio, Saturn, programme and lamp; dragging is separated from tapping. Projected SVG leaders connect accessible DOM actions to these actual targets and follow camera changes.
 
-Clicking or tapping a raycast floor-lamp mesh toggles the same lighting as the explicit `.room-light` button. The button uses a 44px minimum height, rounded dark surface, icon, action label and `aria-pressed` reflecting whether the lights are on. Both on and off states change real light intensities and shade emission. It is disabled during loading. Load/context failure exposes the poster and an unavailable/retry message; initial renderer failure gives a simpler unavailable message. The hint labels the supported interaction without hiding the entry action.
+The torchiere raycast and 44px flat DOM light action control real lights, baked-light intensity and local glow. `aria-pressed` reflects lit state; the light action is unavailable until preparation completes. Loading uses the opening geometry; unsupported worker/context failure offers status and a fresh-worker retry without images. Entry, archive, help and music remain usable.
 
 ### Music control
 
-Title and pause share a labeled button for **Julee Cruise — Falling**, sourced from the user-supplied `/audio/falling.mp3`. Each visit begins off, without a remembered opt-in. An explicit click starts playback; the track loops at volume `.42`. The loading state disables the button and sets `aria-busy`; failures expose a retry label. Off pauses playback. Hidden tabs pause the track, and visible tabs resume only when it was enabled. The current play position is retained when paused.
+Title and pause share a labeled button for **Julee Cruise — Falling**, sourced from the user-supplied `/audio/falling.mp3`. Each visit begins enabled. Native autoplay is attempted; when the browser requires user activation, the first pointer or keyboard gesture starts playback. The control truthfully indicates this waiting state; the track loops at volume `.42`. The loading state disables the button and sets `aria-busy`; failures expose a retry label. Off pauses playback. Hidden tabs pause the track, and visible tabs resume only when it was enabled. The current play position is retained when paused.
 
 Environmental sound has its own pause-menu control and keyboard mute key. The game requests ambient sound without its prior synthesized music layer. Pausing the game suspends environmental audio; it does not automatically turn off the independently enabled Falling track.
 
 ### Archive and pause
 
-The quiet archive entry uses a thin brass rule and 44px minimum height. Its panel gathers guide books, soundtrack access, language choices and expandable controls. Back returns focus to the archive trigger. Pause contains the story tree, clues, music toggle, effects toggle and resume actions. These are application sections, not native modal dialogs; do not claim focus trapping.
+The closed folio opens archive and the paper programme opens help. Their projected DOM guides retain 44px minimum hit areas; archive uses the near-black caption backing and help remains transparent. Its panel gathers guide books, soundtrack access, language choices and expandable controls. Back returns focus to the archive trigger. Pause contains the story tree, clues, music toggle, effects toggle and resume actions. These are application sections, not native modal dialogs; do not claim focus trapping.
 
 ### Touch controls
 
@@ -189,16 +320,16 @@ Dialogue, chapter titles, clues and subtitles remain HTML above the live stage. 
 ### Do:
 - Do preserve the whole miniature and its display plinth across title layouts and bounded camera views.
 - Do preserve mouse, touch and keyboard paths for room rotation and lighting.
-- Do keep entry actions, archive and music understandable without covering the room.
-- Do preserve explicit music opt-in and independent environmental effects.
+- Do connect entry, archive, music, help and lighting labels to their real object anchors.
+- Do preserve the music off switch and independent environmental effects.
 - Do preserve keyboard and touch input, focus outlines and visible held states.
-- Do retain the editable Blender source and raster provenance.
+- Do retain editable Blender source, shared UV atlas and bake provenance.
 - Do align visible feet, prop bases and collider support before adjusting atmospheric effects.
 - Do preserve distinct chapter light cues and material differences across all eleven acts.
 
 ### Don't:
 - Don't reintroduce a paper mode or theme picker.
-- Don't replace the live title viewer with its static poster except during loading or failure.
+- Don't use a raster room placeholder during loading or failure.
 - Don't promise Cycles material parity in either live title rendering or gameplay.
 - Don't use darker grading, thicker fog or stronger bloom to conceal contact or geometry errors.
 - Don't describe planar contact patches as ray tracing or global ambient occlusion.

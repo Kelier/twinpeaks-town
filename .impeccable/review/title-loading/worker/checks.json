@@ -1,0 +1,250 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "desktop",
+      "dimensions": {
+        "host": {
+          "x": 552.953125,
+          "y": 106.828125,
+          "w": 1495.046875,
+          "h": 937.734375
+        },
+        "poster": {
+          "x": 552.953125,
+          "y": 106.828125,
+          "w": 1495.046875,
+          "h": 937.734375
+        },
+        "entry": {
+          "x": 143.359375,
+          "y": 587.78125,
+          "w": 119.046875,
+          "h": 49
+        },
+        "gameRendererAbsent": true
+      },
+      "pendingNavigationMs": 191
+    },
+    {
+      "name": "mobile",
+      "dimensions": {
+        "host": {
+          "x": 0,
+          "y": 220,
+          "w": 390,
+          "h": 364
+        },
+        "poster": {
+          "x": 0,
+          "y": 220,
+          "w": 390,
+          "h": 364
+        },
+        "entry": {
+          "x": 133.625,
+          "y": 594,
+          "w": 122.734375,
+          "h": 44
+        },
+        "gameRendererAbsent": true
+      },
+      "pendingNavigationMs": 103
+    },
+    {
+      "name": "landscape",
+      "dimensions": {
+        "host": {
+          "x": 320.71875,
+          "y": 42,
+          "w": 523.28125,
+          "h": 300
+        },
+        "poster": {
+          "x": 320.71875,
+          "y": 42,
+          "w": 523.28125,
+          "h": 300
+        },
+        "entry": {
+          "x": 59.078125,
+          "y": 214.15625,
+          "w": 97.453125,
+          "h": 44
+        },
+        "gameRendererAbsent": true
+      },
+      "pendingNavigationMs": 101
+    },
+    {
+      "workerTimeout": true,
+      "blockedNavigationMs": 129
+    },
+    {
+      "hdrTimeoutInteractive": true
+    },
+    {
+      "name": "desktop",
+      "normal": true,
+      "latencies": [
+        216
+      ],
+      "profile": {
+        "readyAt": 9036.300000011921,
+        "tasks": [
+          {
+            "start": 393.80000001192093,
+            "duration": 657
+          }
+        ],
+        "preparationTasks": [],
+        "snapshot": {
+          "ready": true,
+          "lit": true,
+          "lightLevel": 1,
+          "yaw": 0.6,
+          "disposed": false,
+          "metrics": {
+            "started": 1723.4000000059605,
+            "downloaded": 2317.0999999940395,
+            "prepared": 6477.9000000059605,
+            "firstFrame": 6549.300000011921
+          },
+          "worker": true,
+          "hint": "轻轻拖动，看看梦的另一面",
+          "render": {
+            "frame": 15,
+            "calls": 64,
+            "triangles": 171490,
+            "points": 0,
+            "lines": 0
+          },
+          "pixelRatio": 0.9814950783793843,
+          "lampPoint": {
+            "x": 0.3244006360524413,
+            "y": 0.2851005417908888
+          }
+        }
+      },
+      "lightButton": true,
+      "raycastLamp": true,
+      "drag": true
+    },
+    {
+      "name": "mobile",
+      "normal": true,
+      "latencies": [
+        153
+      ],
+      "profile": {
+        "readyAt": 7978.699999988079,
+        "tasks": [
+          {
+            "start": 3073.2999999821186,
+            "duration": 71
+          },
+          {
+            "start": 3384.199999988079,
+            "duration": 372
+          },
+          {
+            "start": 3791.399999976158,
+            "duration": 68
+          }
+        ],
+        "preparationTasks": [],
+        "snapshot": {
+          "ready": true,
+          "lit": true,
+          "lightLevel": 1,
+          "yaw": 0.6,
+          "disposed": false,
+          "metrics": {
+            "started": 481.39999997615814,
+            "downloaded": 796.2999999821186,
+            "prepared": 2702.5,
+            "firstFrame": 2741.5999999940395
+          },
+          "worker": true,
+          "hint": "轻轻拖动，看看梦的另一面",
+          "render": {
+            "frame": 15,
+            "calls": 64,
+            "triangles": 171490,
+            "points": 0,
+            "lines": 0
+          },
+          "pixelRatio": 1,
+          "lampPoint": {
+            "x": 0.4476468329286822,
+            "y": 0.2851005417908888
+          }
+        }
+      },
+      "lightButton": true,
+      "raycastLamp": true,
+      "drag": true
+    },
+    {
+      "name": "landscape",
+      "normal": true,
+      "latencies": [
+        612
+      ],
+      "profile": {
+        "readyAt": 8543.700000017881,
+        "tasks": [
+          {
+            "start": 3217.9000000059605,
+            "duration": 430
+          },
+          {
+            "start": 4304.200000017881,
+            "duration": 104
+          }
+        ],
+        "preparationTasks": [
+          {
+            "start": 4304.200000017881,
+            "duration": 104
+          }
+        ],
+        "snapshot": {
+          "ready": true,
+          "lit": true,
+          "lightLevel": 1,
+          "yaw": 0.6,
+          "disposed": false,
+          "metrics": {
+            "started": 680.7999999821186,
+            "downloaded": 924.5,
+            "prepared": 3465.199999988079,
+            "firstFrame": 3477.199999988079
+          },
+          "worker": true,
+          "hint": "轻轻拖动，看看梦的另一面",
+          "render": {
+            "frame": 15,
+            "calls": 64,
+            "triangles": 171490,
+            "points": 0,
+            "lines": 0
+          },
+          "pixelRatio": 1,
+          "lampPoint": {
+            "x": 0.27496968793128107,
+            "y": 0.2851005417908888
+          }
+        }
+      },
+      "lightButton": true,
+      "raycastLamp": true,
+      "drag": true
+    },
+    {
+      "entryDuringLoading": true,
+      "workerDisposed": true
+    }
+  ],
+  "errors": []
+}

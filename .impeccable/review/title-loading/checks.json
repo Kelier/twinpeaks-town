@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "errors": [],
+  "checks": [
+    "actual GLB model loaded",
+    "desktop/mobile/landscape lights transition",
+    "raycast lamp click and tap",
+    "mouse and touch drag changes camera"
+  ]
+}

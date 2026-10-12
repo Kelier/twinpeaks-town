@@ -1,0 +1,40 @@
+{
+  "red-room-baked.glb": {
+    "bytes": 5996228,
+    "meshes": 65,
+    "triangles": 223144,
+    "allAtlasUV": true,
+    "sha256": "46c9dfd478f7e6c286bd3cd58faa8cbe9e7172cd52b32c00d7c56c969203780a"
+  },
+  "red-room-opening.glb": {
+    "bytes": 1333392,
+    "meshes": 65,
+    "triangles": 35537,
+    "allAtlasUV": true,
+    "sha256": "6bf3a6c7cd622b31fd628b41d350ad1632ed773236c8f3589605adba22de8f47"
+  },
+  "room-baked-light.png": {
+    "bytes": 2665855,
+    "atlas": [
+      2048,
+      2048
+    ],
+    "sha256": "c9a648bc047cc51501b7819d2fb3f9d61b4d2879e3d8ebdc0b0038d87902f8bc"
+  },
+  "room-contact-ao.png": {
+    "bytes": 1500764,
+    "atlas": [
+      2048,
+      2048
+    ],
+    "sha256": "54d5f86f5bf11a41d4c7527bab836ba15335b507ab533df152352ee79cce0b19"
+  },
+  "room-surface-normal.png": {
+    "bytes": 1360760,
+    "atlas": [
+      2048,
+      2048
+    ],
+    "sha256": "92b5a49585ae78ab750e1615f55629bbae7b61b4ba63359b3d629c27350b72f4"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "matrix": [
+    "desktop1440x900",
+    "touch390x844",
+    "touch844x390"
+  ],
+  "states": [
+    "lamp on",
+    "lamp off",
+    "raycast lamp click/tap",
+    "mouse/touch drag"
+  ],
+  "finalDepthFix": "touch390x844 on/off/drag reconfirmed",
+  "capture": "On-demand production renderer, reduced motion, no phone FPS claim",
+  "errors": []
+}

@@ -1,0 +1,19 @@
+{
+  "readyAt": 5506.9000000059605,
+  "tasks": [
+    {
+      "start": 739.2999999821186,
+      "duration": 934
+    }
+  ],
+  "triangles": 171490,
+  "drawCalls": 64,
+  "pixelRatio": 1,
+  "shadowAutoUpdate": false,
+  "load": {
+    "started": 431,
+    "downloaded": 937.1999999880791,
+    "prepared": 3684.2999999821186,
+    "firstFrame": 3739.199999988079
+  }
+}
